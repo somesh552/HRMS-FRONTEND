@@ -1,13 +1,8 @@
 .dashboard-page {
-  /* width: 100%;
-  padding:20px 0px;
+
+  width: 100%;
   box-sizing: border-box;
-  background: #ffff;
-  margin: -20px  ;
-  margin-right: 50px; */
-   width: 100%;
-  box-sizing: border-box;
-  padding: 24px;
+  padding-bottom: 7px;
   background: #ffffff;
   min-height: 100%;
 }

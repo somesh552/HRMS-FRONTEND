@@ -15,6 +15,7 @@ body {
   min-height: 100vh;
   display: flex;
   background: transparent;
+  padding-bottom: 7px;
 }
 
 /* ================= SIDEBAR ================= */
@@ -716,7 +717,7 @@ body {
 }
 
 /* ================= HEADER ================= */
-
+/* 
 .employee-onboarding-page .wizard-header {
   height: 70px;
   flex-shrink: 0;
@@ -728,12 +729,12 @@ body {
 
   background: #ffffff;
   border-bottom: 1px solid #eadcc5;
-}
+} */
 
 .employee-onboarding-page .wizard-header h1 {
   margin: 0;
 
-  color: #4d2417;
+  color: #121212;
   font-size: 26px;
   font-weight: 700;
 }
@@ -752,6 +753,7 @@ body {
 
   background: #ffffff;
   border-bottom: 1px solid #f0e7d8;
+  border-bottom: none;
 }
 
 .employee-onboarding-page .progress-step {

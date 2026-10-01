@@ -1,6 +1,6 @@
 .reports-page {
   width: 100%;
-  padding: 24px;
+  padding-bottom:7px;
   box-sizing: border-box;
   background: #ffffff;
 }
@@ -15,7 +15,7 @@
 
 .reports-header h1 {
   margin: 0;
-  font-size: 30px;
+  font-size: 28px;
   font-weight: 700;
   color: #151515;
 }

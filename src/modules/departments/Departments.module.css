@@ -5,7 +5,7 @@
 .departments-content {
   width: 100%;
   box-sizing: border-box;
-  padding: 24px;
+  padding-bottom: 7px;
   background: #ffffff;
   min-height: 100%;
 }
@@ -27,7 +27,7 @@
 
 .department-header h1 {
   margin: 0 0 6px;
-  font-size: 26px;
+  font-size: 28px;
   font-weight: 700;
   color: #111827;
 }

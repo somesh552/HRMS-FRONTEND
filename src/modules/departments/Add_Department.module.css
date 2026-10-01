@@ -1,204 +1,168 @@
-
-/* ==========================
-   PAGE
-========================== */
-
 .add-department-page {
   width: 100%;
-  min-height: calc(100vh - 80px);
-  padding: 35px 40px  40px;
-  box-sizing: border-box;
-  background: #ffffff;
+  min-height: 100vh;
+  background: #fff;
 }
-
-
-/* ==========================
-   FORM CONTAINER
-========================== */
 
 .department-form-container {
   width: 100%;
-  max-width: 900px;
+  max-width: 1200px;
   margin: 0 auto;
+  padding: 35px 40px 50px;
   box-sizing: border-box;
 }
 
-
-/* ==========================
-   HEADER
-========================== */
+/* HEADER */
 
 .department-form-header {
-  margin-bottom: 32px;
+  width: 100%;
+  margin-bottom: 35px;
 }
 
-.department-form-header h2 {
+.department-header-row {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 18px;
+}
+
+.department-header-row h2 {
   margin: 0;
-  font-size: 28px;
+  font-size: 32px;
   font-weight: 700;
-    color: #1f2937;
-
+  color: #172b4d;
 }
 
-.department-form-header p {
-  margin: 8px 0 0;
-  font-size: 14px;
+.back-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 120px;
+  height: 48px;
+
+  margin: 0;
+  padding: 0;
+
+  border: 1px solid #bfc3c8;
+  border-radius: 10px;
+
+  background: #fff;
+  color: #222;
+
+  font-size: 17px;
+  font-weight: 600;
+
+  cursor: pointer;
 }
 
+.back-button:hover {
+  background: #f5f5f5;
+}
 
-/* ==========================
-   FORM FIELD
-========================== */
+/* FORM */
 
 .form-field {
   width: 100%;
-  margin-bottom: 24px;
+  margin-bottom: 30px;
 }
 
-.form-field > label {
+.form-field label {
   display: block;
-  margin-bottom: 8px;
-
-  font-size: 14px;
-  font-weight: 600;
- 
+  margin-bottom: 12px;
+  font-size: 18px;
+  font-weight: 500;
+  color: #222;
 }
 
-
-/* ==========================
-   NORMAL INPUT
-========================== */
-
-.form-field > input {
+.form-field input {
   width: 100%;
-  height: 48px;
-
+  height: 50px;
+  padding: 0 20px;
   box-sizing: border-box;
 
-  padding: 0 14px;
-
   border: 1px solid #d8d8d8;
-  border-radius: 8px;
+  border-radius: 12px;
 
-  background: #ffffff;
-
-  font-size: 14px;
-  font-family: inherit;
-  color: #121212;
-
+  font-size: 18px;
   outline: none;
 }
 
-.form-field > input:focus {
-  border-color: #121212;
-
+.form-field input:focus {
+  border-color: #df7620;
 }
-
-.form-field > input::placeholder {
-  color: #121212;
-}
-
-
-/* ==========================
-   DESIGNATIONS
-========================== */
 
 .designation-input-row {
   width: 100%;
-
   display: flex;
+  flex-direction: row;
   align-items: center;
-
-  gap: 12px;
+  gap: 16px;
+  position: relative;
 }
 
-
-/* Designation Input */
-
-.designation-input-row input {
+.designation-input-row > input {
   flex: 1;
+  width: auto;
+  min-width: 0;
+  height: 50px;
 
-  height: 48px;
-
+  margin: 0;
+  padding: 0 20px;
   box-sizing: border-box;
 
-  padding: 0 14px;
-
   border: 1px solid #d8d8d8;
-  border-radius: 8px;
+  border-radius: 12px;
 
-  background: #ffffff;
-
-  font-size: 14px;
-  /* font-family: inherit; */
-  /* color: #333333; */
+  background: #fff;
+  font-size: 18px;
   outline: none;
 }
 
-.designation-input-row input:focus {
-  border-color: #121212;
-}
+.designation-input-row > .add-designation-btn {
+  width: 200px;
+  min-width: 200px;
+  height: 50px;
 
-.designation-input-row input::placeholder {
-  color: #121212;
-}
-/* ==========================
-   ADD BUTTON
-========================== */
+  margin: 0;
+  padding: 0;
 
-.add-designation-btn {
-  width: 150px;
-  height: 48px;
-
-  flex-shrink: 0;
-
-  padding-bottom: 0 20px;
-
-  border: none;
-  border-radius: 8px;
-
-  background: #d87527;
-  color: #ffffff;
-
-  font-size: 14px;
-  font-weight: 600;
+  position: relative;
+  z-index: 100;
 
   display: flex;
   align-items: center;
   justify-content: center;
 
-  /* white-space: nowrap; */
+  border: none;
+  border-radius: 12px;
+
+  background: #f2b353;
+  color: #ffffff;
+
+  font-size: 18px;
+  font-weight: 600;
 
   cursor: pointer;
-}
-
-.add-designation-btn:hover {
-  background: #f2b353;
+  pointer-events: auto;
 }
 
 
 
 
-
-/* ==========================
+/* ==============================
    ADDED DESIGNATIONS
-========================== */
+============================== */
 
 .designation-list {
   width: 100%;
+  margin-top: 18px;
 
   display: flex;
   flex-direction: column;
-
   gap: 10px;
-
-  margin-top: 12px;
 }
-
-
-/* ==========================
-   DESIGNATION ITEM
-========================== */
 
 .designation-item {
   width: 100%;
@@ -211,60 +175,40 @@
 
 .designation-item input {
   flex: 1;
-  min-width: 0;
 
-  height: 44px;
+  height: 50px;
 
+  padding: 0 15px;
   box-sizing: border-box;
 
-  padding: 0 13px;
-
-  border: 1px solid #e2e2e2;
-  border-radius: 7px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
 
   background: #fafafa;
 
-  font-size: 14px;
-  color: #121212;
-
-  outline: none;
+  font-size: 16px;
 }
 
-
-/* ==========================
-   REMOVE DESIGNATION
-========================== */
-
 .remove-designation-btn {
-  width: 42px;
-  height: 42px;
+  width: 45px;
+  height: 45px;
 
   flex-shrink: 0;
 
   border: none;
-  border-radius: 7px;
+  border-radius: 8px;
 
-  background: #fff0f0;
-  color: #c62828;
+  background: #f5f5f5;
+  color: #d32f2f;
 
-  font-size: 22px;
-  line-height: 1;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  font-size: 24px;
 
   cursor: pointer;
 }
 
-.remove-designation-btn:hover {
-  background: #ffe0e0;
-}
-
-
-/* ==========================
+/* ==============================
    ACTION BUTTONS
-========================== */
+============================== */
 
 .department-actions {
   width: 100%;
@@ -273,131 +217,79 @@
   align-items: center;
   justify-content: space-between;
 
-  margin-top: 35px;
-  padding-top: 24px;
+  margin-top: 30px;
+  padding-top: 32px;
 
-  border-top: 1px solid #eeeeee;
+  border-top: 1px solid #eee;
 }
-
-
-/* ==========================
-   SAVE BUTTON
-========================== */
 
 .save-button {
-  min-width: 160px;
-  height: 46px;
+  min-width: 215px;
+  height: 50px;
 
-  padding: 0 22px;
+  padding: 0 30px;
 
   border: none;
-  border-radius: 8px;
+  border-radius: 12px;
 
-  background: #d87527;
-  color: #ffffff;
+  background: #f2b353;
+  color: #fff;
 
-  font-size: 14px;
+  font-size: 18px;
   font-weight: 600;
 
   cursor: pointer;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }
-
-.save-button:hover {
-  background: #f2b353;
-}
-
-
-/* ==========================
-   CANCEL BUTTON
-========================== */
 
 .cancel-button {
-  min-width: 110px;
-  height: 46px;
+  min-width: 145px;
+  height: 50px;
 
-  padding: 0 20px;
+  padding: 0 30px;
 
-  border: 1px solid #d5d5d5;
-  border-radius: 8px;
+  border: 1px solid #d8d8d8;
+  border-radius: 12px;
 
-  background: #ffffff;
-  color: #555555;
+  background: #fff;
+  color: #333;
 
-  font-size: 14px;
-  font-weight: 600;
+  font-size: 18px;
+  font-weight: 500;
 
   cursor: pointer;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }
 
-.cancel-button:hover {
-  background: #f7f7f7;
-}
-
-
-/* ==========================
+/* ==============================
    RESPONSIVE
-========================== */
+============================== */
 
-@media (max-width: 768px) {
-
-  .add-department-page {
-    padding: 25px 20px;
-  }
-
+@media (max-width: 600px) {
   .department-form-container {
-    max-width: 100%;
+    padding: 25px 18px 35px;
   }
 
   .designation-input-row {
-    gap: 10px;
+    flex-direction: column !important;
+    align-items: stretch !important;
   }
 
-  .add-designation-btn {
-    width: 130px;
-    min-width: 130px;
-    padding: 0 14px;
-  }
-}
-
-
-@media (max-width: 480px) {
-
-  .add-department-page {
-    padding: 20px 15px;
+  .designation-input-row > input {
+    width: 100% !important;
   }
 
-  .department-form-header h2 {
-    font-size: 24px;
-  }
-
-  .designation-input-row {
-    flex-direction: column;
-    align-items: stretch;
-  }
-
-  .designation-input-row input {
-    width: 100%;
-  }
-
-  .add-designation-btn {
-    width: 100%;
+  .designation-input-row > .add-designation-btn {
+    width: 100% !important;
+    min-width: 100%;
+    
   }
 
   .department-actions {
-    gap: 12px;
+    flex-direction: column;
+    gap: 15px;
   }
 
   .save-button,
   .cancel-button {
-    min-width: 0;
-    flex: 1;
+    width: 100%;
   }
 }

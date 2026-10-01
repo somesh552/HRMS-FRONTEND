@@ -1,6 +1,19 @@
 .attendance-page {
   width: 100%;
-  padding: 20px;
+  padding-bottom: 07px;
   box-sizing: border-box;
   background: #ffffff;
+}
+.attendance-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 5px;
+}
+
+.attendance-header h1 {
+  margin: 0;
+  color: #121212;
+  font-size: 28px;
+  font-weight: 700;
 }

@@ -165,10 +165,8 @@ const DesignationTable = () => {
             <tr>
               <th>DESIGNATION ID</th>
               <th>DESIGNATION NAME</th>
-              <th>DESCRIPTION</th>
               <th>DEPARTMENT</th>
-              <th>EMPLOYEES</th>
-              <th>STATUS</th>
+              
               <th>ACTION</th>
             </tr>
           </thead>
@@ -186,15 +184,11 @@ const DesignationTable = () => {
                   </td>
 
                   {/* Not currently provided by backend */}
-                  <td>—</td>
+               
                   <td>
                     {designation.department_name || "—"}
                   </td>
-                  {/* Not currently provided by backend */}
-                  <td>—</td>
-
-                  {/* Not currently provided by backend */}
-                  <td>—</td>
+         
 
                   <td>
                     <div className={styles["designation-actions"]}>

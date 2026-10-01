@@ -11,21 +11,25 @@ body {
 
 /* ================= PAGE ================= */
 
-.employee-page {
 
-  position: relative;
-  top: -40px;
-  width: 100%;
-  padding: 30px 30px 25px 15px;
+
+.employee-page {
+  position: relative !important;
+
+  top: -77px ;
+
+  margin-top: 0 !important;
+
+  padding-top: 0 !important;
 }
 
 .employee-page h1 {
-  margin: 0 0 24px;
-  color: #121212;
-  font-size: 30px;
+  margin-top: 0 !important;
+  margin-bottom: 24px !important;
+
+  font-size: 28px;
   font-weight: 700;
 }
-
 /* ================= FILTERS ================= */
 .filter-card {
    display: flex;

@@ -1,20 +1,22 @@
 .performance-review {
   width: 100%;
   box-sizing: border-box;
-  padding: 28px 36px;
+  padding-bottom:07px;
   background: #ffffff;
   min-height: 100%;
   font-family: Arial, sans-serif;
+
 }
 
 .performance-header {
   margin-bottom: 22px;
+
 }
 
 .performance-header h1 {
   margin: 0;
   color: #121212;
-  font-size: 30px;
+  font-size: 28px;
   font-weight: 700;
 }
 
