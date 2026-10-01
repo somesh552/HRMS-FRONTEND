@@ -1,12 +1,65 @@
 import React from "react";
-import {
-  ChevronLeft,
-  ChevronRight,
-} from "lucide-react";
+
+import { leaveRequests } from "./leaveMockData";
 
 import styles from "./LeaveManagementGraph.module.css";
 
 const LeaveManagementGraph = () => {
+  // ==========================
+  // LEAVE USAGE
+  // ==========================
+
+  const casualLeave = leaveRequests
+    .filter((request) => request.leaveType === "Casual Leave")
+    .reduce((total, request) => total + request.days, 0);
+
+  const sickLeave = leaveRequests
+    .filter((request) => request.leaveType === "Sick Leave")
+    .reduce((total, request) => total + request.days, 0);
+
+  const earnedLeave = leaveRequests
+    .filter((request) => request.leaveType === "Earned Leave")
+    .reduce((total, request) => total + request.days, 0);
+
+  const totalLeaveDays =
+    casualLeave + sickLeave + earnedLeave;
+
+  // ==========================
+  // LEAVE STATUS
+  // ==========================
+
+  const pending = leaveRequests.filter(
+    (request) => request.status === "Pending"
+  ).length;
+
+  const approved = leaveRequests.filter(
+    (request) => request.status === "Approved"
+  ).length;
+
+  const rejected = leaveRequests.filter(
+    (request) => request.status === "Rejected"
+  ).length;
+
+  const cancelled = leaveRequests.filter(
+    (request) => request.status === "Cancelled"
+  ).length;
+
+  // ==========================
+  // USAGE PERCENTAGES
+  // ==========================
+
+  const casualPercentage = totalLeaveDays
+    ? ((casualLeave / totalLeaveDays) * 100).toFixed(2)
+    : 0;
+
+  const sickPercentage = totalLeaveDays
+    ? ((sickLeave / totalLeaveDays) * 100).toFixed(2)
+    : 0;
+
+  const earnedPercentage = totalLeaveDays
+    ? ((earnedLeave / totalLeaveDays) * 100).toFixed(2)
+    : 0;
+
   return (
     <div className={styles["leave-management-graphs"]}>
 
@@ -14,44 +67,74 @@ const LeaveManagementGraph = () => {
           LEAVE USAGE OVERVIEW
       ========================== */}
 
-      <div className={[styles["leave-chart-card"], styles["usage-card"]].join(" ")}>
-
+      <div
+        className={[
+          styles["leave-chart-card"],
+          styles["usage-card"],
+        ].join(" ")}
+      >
         <h3>Leave Usage Overview</h3>
 
         <div className={styles["usage-content"]}>
 
           <div className={styles["usage-donut"]}>
             <div className={styles["usage-donut-center"]}>
-              <strong>18</strong>
-              <span>Total Leaves</span>
-              <small>This Year</small>
+              <strong>{totalLeaveDays}</strong>
+              <span>Requested Days</span>
+              <small>Current Data</small>
             </div>
           </div>
 
           <div className={styles["usage-legend"]}>
 
             <div>
-              <span className={[styles["legend-dot"], styles["green"]].join(" ")}></span>
-              <p>Casual Leave </p>
-              <b> (44.44%)</b>
+              <span
+                className={[
+                  styles["legend-dot"],
+                  styles["green"],
+                ].join(" ")}
+              />
+
+              <p>Casual Leave</p>
+
+              <b>
+                {casualLeave} ({casualPercentage}%)
+              </b>
             </div>
 
             <div>
-              <span className={[styles["legend-dot"], styles["blue"]].join(" ")}></span>
+              <span
+                className={[
+                  styles["legend-dot"],
+                  styles["blue"],
+                ].join(" ")}
+              />
+
               <p>Sick Leave</p>
-              <b>5 (27.78%)</b>
+
+              <b>
+                {sickLeave} ({sickPercentage}%)
+              </b>
             </div>
 
             <div>
-              <span className={[styles["legend-dot"], styles["purple"]].join(" ")}></span>
+              <span
+                className={[
+                  styles["legend-dot"],
+                  styles["purple"],
+                ].join(" ")}
+              />
+
               <p>Earned Leave</p>
-              <b>5 (27.78%)</b>
+
+              <b>
+                {earnedLeave} ({earnedPercentage}%)
+              </b>
             </div>
 
           </div>
 
         </div>
-
       </div>
 
 
@@ -59,28 +142,35 @@ const LeaveManagementGraph = () => {
           LEAVE TREND
       ========================== */}
 
-      <div className={[styles["leave-chart-card"], styles["trend-card"]].join(" ")}>
-
+      <div
+        className={[
+          styles["leave-chart-card"],
+          styles["trend-card"],
+        ].join(" ")}
+      >
         <div className={styles["chart-title-row"]}>
+
           <h3>
             Leave Trend <span>(This Year)</span>
           </h3>
 
           <div className={styles["trend-legend"]}>
+
             <span>
-              <i className={styles["green"]}></i>
+              <i className={styles["green"]} />
               Casual Leave
             </span>
 
             <span>
-              <i className={styles["blue"]}></i>
+              <i className={styles["blue"]} />
               Sick Leave
             </span>
 
             <span>
-              <i className={styles["purple"]}></i>
+              <i className={styles["purple"]} />
               Earned Leave
             </span>
+
           </div>
         </div>
 
@@ -96,11 +186,11 @@ const LeaveManagementGraph = () => {
 
           <div className={styles["chart-area"]}>
 
-            <div className={styles["grid-line"]}></div>
-            <div className={styles["grid-line"]}></div>
-            <div className={styles["grid-line"]}></div>
-            <div className={styles["grid-line"]}></div>
-            <div className={styles["grid-line"]}></div>
+            <div className={styles["grid-line"]} />
+            <div className={styles["grid-line"]} />
+            <div className={styles["grid-line"]} />
+            <div className={styles["grid-line"]} />
+            <div className={styles["grid-line"]} />
 
             <svg
               className={styles["trend-svg"]}
@@ -192,9 +282,7 @@ const LeaveManagementGraph = () => {
             </div>
 
           </div>
-
         </div>
-
       </div>
 
 
@@ -202,15 +290,19 @@ const LeaveManagementGraph = () => {
           LEAVE STATUS
       ========================== */}
 
-      <div className={[styles["leave-chart-card"], styles["status-card"]].join(" ")}>
-
+      <div
+        className={[
+          styles["leave-chart-card"],
+          styles["status-card"],
+        ].join(" ")}
+      >
         <h3>Leave Status</h3>
 
         <div className={styles["status-content"]}>
 
           <div className={styles["status-donut"]}>
             <div className={styles["status-donut-center"]}>
-              <strong>06</strong>
+              <strong>{pending}</strong>
               <span>Pending</span>
               <small>Requests</small>
             </div>
@@ -219,37 +311,35 @@ const LeaveManagementGraph = () => {
           <div className={styles["status-legend"]}>
 
             <div>
-              <i className={styles["orange"]}></i>
+              <i className={styles["orange"]} />
               <span>Pending</span>
-              <b>06</b>
+              <b>{pending}</b>
             </div>
 
             <div>
-              <i className={styles["green"]}></i>
+              <i className={styles["green"]} />
               <span>Approved</span>
-              <b>24</b>
+              <b>{approved}</b>
             </div>
 
             <div>
-              <i className={styles["red"]}></i>
+              <i className={styles["red"]} />
               <span>Rejected</span>
-              <b>04</b>
+              <b>{rejected}</b>
             </div>
 
             <div>
-              <i className={styles["blue"]}></i>
+              <i className={styles["blue"]} />
               <span>Cancelled</span>
-              <b>02</b>
+              <b>{cancelled}</b>
             </div>
 
           </div>
 
         </div>
-
       </div>
 
-</div>
-      
+    </div>
   );
 };
 

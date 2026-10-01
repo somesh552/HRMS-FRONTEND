@@ -11,7 +11,7 @@
   },
   "dependencies": {
     "@reduxjs/toolkit": "^2.12.0",
-    "axios": "^1.19.0",
+    "axios": "^1.20.0",
     "lucid-react-icons": "^0.1.2",
     "lucide-react": "^1.31.0",
     "react": "^19.2.8",

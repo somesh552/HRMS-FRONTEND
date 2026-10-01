@@ -22,11 +22,30 @@ import HREmployeeManagement from "../modules/employees/pages/EmployeeManagement"
 import EmployeeDetails from "../modules/employees/pages/EmployeeDetails";
 import Email from "../pages/HR/Email";
 import Notifications from "../pages/HR/Notifications";
-import LeaveManagement from "../pages/HR/LeaveManagement/LeaveManagement";
 import PerformanceReviews from "../pages/HR/PerformanceReviews/PerformanceReviews";
 import Reports from "../pages/HR/Reports/Reports";
 import styles from "../layouts/Layout.module.css";
 
+// import JobOpenings from "../modules/recruitment/pages/JobOpenings";
+// import JobOpeningForm from "../modules/recruitment/pages/JobOpeningForm";
+// import Applications from "../modules/recruitment/pages/Applications";
+// import ApplicationDetails from "../modules/recruitment/pages/ApplicationDetails";
+// import Interviews from "../modules/recruitment/pages/Interviews";
+// import InterviewForm from "../modules/recruitment/pages/InterviewForm";
+// import InterviewDetails from "../modules/recruitment/pages/InterviewDetails";
+
+// import Offers from "../modules/recruitment/pages/Offers";
+// import OfferForm from "../modules/recruitment/pages/OfferForm";
+// import Onboarding from "../modules/recruitment/pages/Onboarding";
+// import RecruitmentManagement from "../modules/recruitment/pages/RecruitmentManagement";
+// import RecruitmentDashboard from "../modules/recruitment/pages/RecruitmentDashboard";
+
+import LeaveManagement from "../pages/HR/LeaveManagement/LeaveManagement";
+import LeaveSettings from "../pages/HR/LeaveManagement/settings/LeaveSettings";
+import LeaveTypes from "../pages/HR/LeaveManagement/settings/LeaveTypes";
+import LeavePeriod from "../pages/HR/LeaveManagement/settings/LeavePeriod";
+import HolidayList from "../pages/HR/LeaveManagement/settings/HolidayList";
+import LeaveAllocations from "../pages/HR/LeaveManagement/settings/LeaveAllocations";
 function HRPage({ Component, title }) {
   const [collapsed, setCollapsed] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -103,6 +122,137 @@ function AppRoutes() {
         <Route path="/hr/leave-management" element={<HRPage Component={LeaveManagement} title="Leave Management" />} />
         <Route path="/hr/performance-reviews" element={<HRPage Component={PerformanceReviews} title="Performance Reviews" />} />
         <Route path="/hr/reports" element={<HRPage Component={Reports} title="Reports" />} />
+{/* 
+        <Route
+                  path="/hr/recruitment/job-openings"
+                  element={<HRPage Component={JobOpenings} title="Job Openings" />}
+                />
+                <Route
+                  path="/hr/recruitment/job-openings/add"
+                  element={
+                    <HRPage Component={JobOpeningForm} title="Create Job Opening" />
+                  }
+                />
+                <Route
+                  path="/hr/recruitment/job-openings/:id/edit"
+                  element={
+                    <HRPage Component={JobOpeningForm} title="Edit Job Opening" />
+                  }
+                />
+                <Route
+                  path="/hr/recruitment/applications"
+                  element={<HRPage Component={Applications} title="Applications" />}
+                />
+                <Route
+                  path="/hr/recruitment/applications/:id"
+                  element={
+                    <HRPage
+                      Component={ApplicationDetails}
+                      title="Application Details"
+                    />
+                  }
+                />
+                <Route
+                  path="/hr/recruitment/interviews"
+                  element={<HRPage Component={Interviews} title="Interviews" />}
+                />
+                <Route
+                  path="/hr/recruitment/interviews/add"
+                  element={
+                    <HRPage Component={InterviewForm} title="Schedule Interview" />
+                  }
+                />
+        
+                <Route
+                  path="/hr/recruitment/interviews/:id/edit"
+                  element={<HRPage Component={InterviewForm} title="Edit Interview" />}
+                />
+                <Route
+                  path="/hr/recruitment/interviews/:id"
+                  element={
+                    <HRPage Component={InterviewDetails} title="Interview Details" />
+                  }
+                />
+                <Route
+                  path="/hr/recruitment/offers"
+                  element={<HRPage Component={Offers} title="Offers" />}
+                />
+        
+                <Route
+                  path="/hr/recruitment/offers/add"
+                  element={<HRPage Component={OfferForm} title="Create Offer" />}
+                />
+                <Route
+                  path="/hr/recruitment/onboarding"
+                  element={<HRPage Component={Onboarding} title="Onboarding" />}
+                />
+                <Route
+                  path="/hr/recruitment/dashboard"
+                  element={
+                    <HRPage
+                      Component={RecruitmentDashboard}
+                      title="Recruitment Dashboard"
+                    />
+                  }
+                />
+                <Route
+                  path="/hr/recruitment/management"
+                  element={
+                    <HRPage
+                      Component={RecruitmentManagement}
+                      title="Recruitment Management"
+                    />
+                  }
+                /> */}
+                <Route
+          path="/hr/leave-management/settings"
+          element={
+            <HRPage
+              Component={LeaveSettings}
+              title="Leave Settings"
+            />
+          }
+        />
+        
+        <Route
+          path="/hr/leave-management/settings/leave-types"
+          element={
+            <HRPage
+              Component={LeaveTypes}
+              title="Leave Types"
+            />
+          }
+        />
+        
+        <Route
+          path="/hr/leave-management/settings/leave-period"
+          element={
+            <HRPage
+              Component={LeavePeriod}
+              title="Leave Period"
+            />
+          }
+        />
+        
+        <Route
+          path="/hr/leave-management/settings/holidays"
+          element={
+            <HRPage
+              Component={HolidayList}
+              title="Holiday List"
+            />
+          }
+        />
+        
+        <Route
+          path="/hr/leave-management/settings/allocations"
+          element={
+            <HRPage
+              Component={LeaveAllocations}
+              title="Leave Allocations"
+            />
+          }
+        />
       </Routes>
     </BrowserRouter>
   );

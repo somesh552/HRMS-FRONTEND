@@ -106,7 +106,7 @@ const EmployeeOnboarding = () => {
     permanentState: "",
     permanentPincode: "",
     permanentCountry: "",
-    permanentAddress: "",
+    // permanentAddress: "",
 
     // Current Address
     currentHouseNo: "",
@@ -115,7 +115,7 @@ const EmployeeOnboarding = () => {
     currentState: "",
     currentPincode: "",
     currentCountry: "",
-    currentAddress: "",
+    // currentAddress: "",
 
     sameAsPermanent: false,
 
@@ -321,10 +321,10 @@ const EmployeeOnboarding = () => {
             permanentAddress?.country ??
             "",
 
-          permanentAddress:
-            permanentAddress?.address ??
-            permanentAddress?.full_address ??
-            "",
+          // permanentAddress:
+          //   permanentAddress?.address ??
+          //   permanentAddress?.full_address ??
+          //   "",
 
           // Current Address
           currentHouseNo:
@@ -353,10 +353,10 @@ const EmployeeOnboarding = () => {
             currentAddress?.country ??
             "",
 
-          currentAddress:
-            currentAddress?.address ??
-            currentAddress?.full_address ??
-            "",
+          // currentAddress:
+            // currentAddress?.address ??
+            // currentAddress?.full_address ??
+            // "",
 
           sameAsPermanent:
             Boolean(
@@ -927,10 +927,10 @@ const EmployeeOnboarding = () => {
         newErrors.permanentCountry = "Country is required";
       }
 
-      if (!formData.permanentAddress.trim()) {
-        newErrors.permanentAddress =
-          "Permanent Address is required";
-      }
+      // if (!formData.permanentAddress.trim()) {
+      //   newErrors.permanentAddress =
+      //     "Permanent Address is required";
+      // }
 
       // Current Address
       // If Same as Permanent is checked, copied values are accepted.
@@ -972,10 +972,10 @@ const EmployeeOnboarding = () => {
           newErrors.currentCountry = "Country is required";
         }
 
-        if (!formData.currentAddress.trim()) {
-          newErrors.currentAddress =
-            "Current Address is required";
-        }
+        // if (!formData.currentAddress.trim()) {
+        //   newErrors.currentAddress =
+        //     "Current Address is required";
+        // }
       }
     }
 
@@ -1628,15 +1628,15 @@ const AddressManagement = ({ formData, updateField, errors }) => {
           }
           error={errors?.permanentCountry}
         />
-
-        <Input
-          label="Permanent Address"
+{/* 
+       <Input */}
+          {/* label="Permanent Address"
           value={formData.permanentAddress}
           onChange={(e) =>
             updateField("permanentAddress", e.target.value)
           }
           error={errors?.permanentAddress}
-        />
+        /> */}
       </div>
 
       {/* ================= SAME ADDRESS ================= */}
@@ -1716,14 +1716,14 @@ const AddressManagement = ({ formData, updateField, errors }) => {
           error={errors?.currentCountry}
         />
 
-        <Input
+        {/* <Input
           label="Current Address"
           value={formData.currentAddress}
           onChange={(e) =>
             updateField("currentAddress", e.target.value)
           }
-          error={errors?.currentAddress}
-        />
+          error={errors?.currentAddress} 
+       /> */}
       </div>
     </div>
   );
