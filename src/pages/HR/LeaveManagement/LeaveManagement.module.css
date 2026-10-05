@@ -1,116 +1,187 @@
-/* ==========================
-   LEAVE MANAGEMENT CONTENT
-========================== */
-
-.leave-management-content {
-  width: 100%;
+.page {
+  padding: 24px;
   min-height: 100%;
-  padding: 20px 24px;
-  box-sizing: border-box;
-  background: #ffffff;
-  overflow-x: hidden;
+  background: #f8f9fb;
 }
 
+/* =========================
+   HEADER
+========================= */
 
-/* ==========================
-   PAGE HEADER
-========================== */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+}
 
-.leave-page-header {
-  width: 100%;
+.header h1 {
+  margin: 0;
+  font-size: 28px;
+  font-weight: 700;
+  color: #172033;
+}
+
+.headerActions {
   display: flex;
   align-items: center;
+  gap: 12px;
+}
+
+.navigationButton {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background: #fff;
+  color: #444;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.navigationButton:hover {
+  background: #f5f5f5;
+}
+
+.primaryButton {
+  border: none;
+  border-radius: 8px;
+  padding: 11px 18px;
+  background: #c88a2b;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.primaryButton:hover {
+  background: #b57920;
+}
+
+.primaryButton:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* =========================
+   CARD
+========================= */
+
+.card {
+  background: #fff;
+  border: 1px solid #e4e6eb;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+.cardHeader {
+  display: flex;
   justify-content: space-between;
-  gap: 20px;
-  margin-bottom: 18px;
+  align-items: center;
+  padding: 20px 22px;
+  border-bottom: 1px solid #e8e8e8;
 }
 
-.leave-page-header h1 {
-  margin: 0 0 5px;
-  color: #171717;
-  font-size: 24px;
-  font-weight: 700;
+.cardHeader h2 {
+  margin: 0 0 6px;
+  font-size: 18px;
+  color: #172033;
 }
 
-.leave-page-header p {
+.cardHeader p {
   margin: 0;
-  color: #77716d;
+  color: #777;
   font-size: 13px;
 }
 
-
-/* ==========================
-   APPLY LEAVE BUTTON
-========================== */
-
-.apply-leave-btn {
-  flex-shrink: 0;
-
-  height: 38px;
-  padding: 0 18px;
-
-  border: none;
-  border-radius: 7px;
-
-  background: #f2b353;
-  color: #ffffff;
-
+.count {
+  padding: 8px 12px;
+  border-radius: 20px;
+  background: #f4ead9;
+  color: #95651e;
   font-size: 13px;
   font-weight: 600;
+}
 
-  cursor: pointer;
+/* =========================
+   TABLE
+========================= */
+
+.tableWrapper {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table th {
+  padding: 14px 18px;
+  background: #fafafa;
+  border-bottom: 1px solid #e5e5e5;
+  text-align: left;
+  color: #555;
+  font-size: 13px;
+  font-weight: 600;
   white-space: nowrap;
-  transition: background 0.2s ease;
 }
 
-.apply-leave-btn:hover {
-  background: #121212;
-  color:#f2b353;
+.table td {
+  padding: 15px 18px;
+  border-bottom: 1px solid #eeeeee;
+  color: #333;
+  font-size: 14px;
 }
 
-
-/* ==========================
-   COMMON CARD
-========================== */
-
-.leave-management-content > * {
-  box-sizing: border-box;
+.table tbody tr:hover {
+  background: #fcfcfc;
 }
 
-
-/* ==========================
-   RESPONSIVE
-========================== */
-
-@media (max-width: 900px) {
-  .leave-management-content {
-    padding: 18px;
-  }
-
-  .leave-page-header {
-    align-items: flex-start;
-    flex-direction: column;
-  }
-
-  .apply-leave-btn {
-    width: 100%;
-  }
+.table td strong {
+  display: block;
+  color: #172033;
 }
 
-@media (max-width: 600px) {
-  .leave-management-content {
-    padding: 14px;
-  }
-
-  .leave-page-header h1 {
-    font-size: 21px;
-  }
+.table td small {
+  display: block;
+  margin-top: 4px;
+  color: #888;
+  font-size: 12px;
 }
-/* ==========================
-   APPLY LEAVE MODAL
-========================== */
 
-.leave-modal-overlay {
+/* =========================
+   EMPTY STATE
+========================= */
+
+.emptyState {
+  padding: 60px 20px;
+  text-align: center;
+  color: #777;
+}
+
+.emptyState strong {
+  display: block;
+  margin-bottom: 8px;
+  color: #333;
+  font-size: 16px;
+}
+
+.emptyState p {
+  margin: 0;
+  font-size: 13px;
+}
+
+/* =========================
+   MODAL OVERLAY
+========================= */
+
+.overlay {
   position: fixed;
   inset: 0;
   z-index: 1000;
@@ -121,56 +192,61 @@
 
   padding: 20px;
 
-  background: rgba(23, 23, 23, 0.45);
+  background: rgba(20, 24, 32, 0.55);
 }
 
-.leave-modal {
-  width: min(680px, 100%);
-  max-height: calc(100vh - 40px);
+/* =========================
+   MODAL
+========================= */
+
+.modal {
+  width: 100%;
+  max-width: 650px;
+  max-height: 90vh;
 
   overflow-y: auto;
 
-  background: #ffffff;
-  border: 1px solid #eee5dc;
-  border-radius: 10px;
+  background: #fff;
+  border-radius: 12px;
 
-  box-shadow: 0 18px 50px rgba(40, 25, 15, 0.18);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
 }
 
-.leave-modal-header {
+/* =========================
+   MODAL HEADER
+========================= */
+
+.modalHeader {
   display: flex;
-  align-items: flex-start;
   justify-content: space-between;
+  align-items: flex-start;
 
-  padding: 20px 22px;
+  padding: 22px 24px;
 
-  border-bottom: 1px solid #eee5dc;
+  border-bottom: 1px solid #e8e8e8;
 }
 
-.leave-modal-header h2 {
-  margin: 0 0 5px;
-
-  color: #222222;
-  font-size: 19px;
-  font-weight: 700;
+.modalHeader h2 {
+  margin: 0 0 6px;
+  color: #172033;
+  font-size: 20px;
 }
 
-.leave-modal-header p {
+.modalHeader p {
   margin: 0;
-
-  color: #77716d;
-  font-size: 12px;
+  color: #777;
+  font-size: 13px;
 }
 
-.leave-modal-close {
-  width: 30px;
-  height: 30px;
+.closeButton {
+  width: 34px;
+  height: 34px;
 
   border: none;
-  border-radius: 6px;
+  border-radius: 50%;
 
-  background: transparent;
-  color: #555555;
+  background: #f5f5f5;
+  color: #555;
 
   font-size: 22px;
   line-height: 1;
@@ -178,205 +254,167 @@
   cursor: pointer;
 }
 
-.leave-modal-close:hover {
-  background: #faf1e9;
-  color: #8a4b24;
+.closeButton:hover {
+  background: #e9e9e9;
 }
 
-
-/* ==========================
+/* =========================
    FORM
-========================== */
+========================= */
 
-.leave-form {
-  padding: 22px;
-}
-
-.leave-form-grid {
+.formGrid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 18px 16px;
+  gap: 18px;
+
+  padding: 24px;
 }
 
-.leave-form-field {
+.field {
   display: flex;
   flex-direction: column;
   gap: 7px;
 }
 
-.leave-form-field label {
-  color: #4d4038;
-  font-size: 12px;
+.field label {
+  color: #333;
+  font-size: 13px;
   font-weight: 600;
 }
 
-.leave-form-field select,
-.leave-form-field input,
-.leave-form-field textarea {
+.field input,
+.field select {
   width: 100%;
   box-sizing: border-box;
 
-  border: 1px solid #ded4cb;
-  border-radius: 6px;
+  padding: 11px 12px;
 
-  background: #ffffff;
-  color: #333333;
+  border: 1px solid #d9d9d9;
+  border-radius: 7px;
 
-  font-family: inherit;
-  font-size: 12px;
+  background: #fff;
+  color: #333;
+
+  font-size: 14px;
 
   outline: none;
-  transition:
-    border-color 0.2s ease,
-    box-shadow 0.2s ease;
 }
 
-.leave-form-field select,
-.leave-form-field input {
-  height: 38px;
-  padding: 0 11px;
+.field input:focus,
+.field select:focus {
+  border-color: #c88a2b;
+  box-shadow: 0 0 0 2px rgba(200, 138, 43, 0.1);
 }
 
-.leave-form-field textarea {
-  padding: 10px 11px;
-  resize: vertical;
+.field input::placeholder {
+  color: #aaa;
 }
-
-.leave-form-field select:focus,
-.leave-form-field input:focus,
-.leave-form-field textarea:focus {
-  border-color: #c99b76;
-  box-shadow: 0 0 0 2px rgba(201, 155, 118, 0.12);
-}
-
-.leave-form-readonly,
-.leave-form-balance {
-  min-height: 38px;
-  box-sizing: border-box;
-
-  display: flex;
-  align-items: center;
-
-  padding: 0 11px;
-
-  border: 1px solid #eee5dc;
+.editButton {
+  border: none;
+  background: #f2b353;
+  color: white;
+  padding: 7px 14px;
   border-radius: 6px;
-
-  background: #fcf8f3;
-
-  color: #654a39;
-  font-size: 12px;
-}
-
-.leave-form-balance {
-  color: #28752c;
+  cursor: pointer;
+  font-size: 13px;
   font-weight: 600;
 }
 
-.leave-form-full {
-  grid-column: 1 / -1;
+.editButton:hover {
+  opacity: 0.9;
+}
+/* =========================
+   ERROR
+========================= */
+
+.error {
+  color: #d64545;
+  font-size: 12px;
 }
 
-.leave-form-error {
-  color: #d53b2e;
-  font-size: 10px;
-}
-
-
-/* ==========================
+/* =========================
    ACTIONS
-========================== */
+========================= */
 
-.leave-form-actions {
+.actions {
   display: flex;
   justify-content: flex-end;
   gap: 10px;
 
-  margin-top: 24px;
-  padding-top: 18px;
+  padding: 18px 24px;
 
-  border-top: 1px solid #eee5dc;
+  border-top: 1px solid #e8e8e8;
 }
 
-.leave-cancel-btn,
-.leave-submit-btn {
-  height: 36px;
-  padding: 0 16px;
+.secondaryButton {
+  padding: 10px 17px;
 
-  border-radius: 6px;
-
-  font-size: 12px;
-  font-weight: 600;
-
-  cursor: pointer;
-}
-
-.leave-cancel-btn {
-  border: 1px solid #d8cdc3;
-  background: #ffffff;
-  color: #654a39;
-}
-
-.leave-cancel-btn:hover {
-  background: #faf1e9;
-}
-
-.leave-submit-btn {
-  border: 1px solid #f2b353;
-  background: #f2b353;
-  color: #ffffff;
-}
-
-.leave-submit-btn:hover {
-  background: #121212;
-  border-color: #121212;
-  color: #f2b353;
-}
-.leave-page-actions {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.settings-btn {
-  border: 1px solid #d1d5db;
+  border: 1px solid #d8d8d8;
   border-radius: 8px;
-  padding: 11px 18px;
-  background: #ffffff;
-  color: #374151;
+
+  background: #fff;
+  color: #555;
+
   font-size: 14px;
-  font-weight: 600;
+  font-weight: 500;
+
   cursor: pointer;
 }
 
-.settings-btn:hover {
-  background: #f9fafb;
+.secondaryButton:hover {
+  background: #f7f7f7;
 }
 
+.secondaryButton:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
 
-/* ==========================
+/* =========================
    RESPONSIVE
-========================== */
+========================= */
 
-@media (max-width: 600px) {
-  .leave-modal-overlay {
-    padding: 10px;
+@media (max-width: 768px) {
+  .page {
+    padding: 16px;
   }
 
-  .leave-modal {
-    max-height: calc(100vh - 20px);
+  .header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
   }
 
-  .leave-form-grid {
+  .headerActions {
+    width: 100%;
+    flex-wrap: wrap;
+  }
+
+  .formGrid {
     grid-template-columns: 1fr;
   }
 
-  .leave-form-full {
-    grid-column: auto;
+  .modal {
+    max-height: 95vh;
+  }
+}
+
+@media (max-width: 480px) {
+  .headerActions {
+    flex-direction: column;
+    align-items: stretch;
   }
 
-  .leave-modal-header,
-  .leave-form {
-    padding: 16px;
+  .navigationButton,
+  .primaryButton {
+    justify-content: center;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .cardHeader {
+    align-items: flex-start;
+    gap: 12px;
+    flex-direction: column;
   }
 }
