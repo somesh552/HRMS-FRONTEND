@@ -1,159 +1,273 @@
 .page {
-  width: 100%;
-  font-family: "Segoe UI", Arial, sans-serif;
+  padding: 24px;
+  min-height: 100%;
+  background: #ffffff;
 }
 
-.headerActions {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
+/* =========================
+   HEADER
+========================= */
 
 .header {
   display: flex;
   justify-content: space-between;
-  align-items: flex-start;
-  gap: 20px;
+  align-items: center;
   margin-bottom: 24px;
 }
 
 .header h1 {
   margin: 0;
-  font-size: 24px;
+  font-size: 28px;
+  font-weight: 700;
+  color: #172033;
 }
 
-.header p {
-  margin: 6px 0 0;
-  color: #978F66;
-  font-size: 13px;
+.headerActions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
 }
 
-.primaryButton,
-.secondaryButton {
-  border-radius: 7px;
+.navigationButton {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
   padding: 10px 16px;
-  font-size: 13px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background: #fff;
+  color: #444;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.navigationButton:hover {
+  background: #f5f5f5;
+}
+
+.primaryButton {
+  border: none;
+  border-radius: 8px;
+  padding: 11px 18px;
+  background: #c88a2b;
+  color: #fff;
+  font-size: 14px;
   font-weight: 600;
   cursor: pointer;
 }
 
-.primaryButton {
-  border: 1px solid #995F2F;
-  background: #995F2F;
-  color: #fff;
+.primaryButton:hover {
+  background: #b57920;
 }
 
-.secondaryButton {
-  border: 1px solid #E4D6A9;
-  background: #fff;
-  color: #121212;
+.primaryButton:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
 }
+
+/* =========================
+   CARD
+========================= */
 
 .card {
-  overflow: hidden;
-  border: 1px solid #E8DED4;
-  border-radius: 12px;
   background: #fff;
+  border: 1px solid #e4e6eb;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
 }
 
 .cardHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   padding: 20px 22px;
-  border-bottom: 1px solid #E8DED4;
+  border-bottom: 1px solid #e8e8e8;
 }
 
 .cardHeader h2 {
-  margin: 0;
-  font-size: 17px;
+  margin: 0 0 6px;
+  font-size: 18px;
+  color: #172033;
 }
 
 .cardHeader p {
-  margin: 5px 0 0;
-  color: #978F66;
+  margin: 0;
+  color: #777;
   font-size: 13px;
 }
 
+.count {
+  padding: 8px 12px;
+  border-radius: 20px;
+  background: #f4ead9;
+  color: #95651e;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+/* =========================
+   TABLE
+========================= */
+
 .tableWrapper {
+  width: 100%;
   overflow-x: auto;
 }
 
 .table {
   width: 100%;
-  min-width: 900px;
   border-collapse: collapse;
 }
 
 .table th {
-  padding: 13px 20px;
-  background: #FFFAF0;
-  color: #978F66;
-  font-size: 12px;
+  padding: 14px 18px;
+  background: #fafafa;
+  border-bottom: 1px solid #e5e5e5;
   text-align: left;
+  color: #555;
+  font-size: 13px;
+  font-weight: 600;
+  white-space: nowrap;
 }
 
 .table td {
-  padding: 16px 20px;
-  border-top: 1px solid #F0E7D8;
-  color: #121212;
-  font-size: 13px;
+  padding: 15px 18px;
+  border-bottom: 1px solid #eeeeee;
+  color: #333;
+  font-size: 14px;
+}
+
+.table tbody tr:hover {
+  background: #fcfcfc;
+}
+
+.table td strong {
+  display: block;
+  color: #172033;
 }
 
 .table td small {
   display: block;
-  margin-top: 3px;
-  color: #978F66;
-  font-size: 11px;
+  margin-top: 4px;
+  color: #888;
+  font-size: 12px;
 }
+
+/* =========================
+   EMPTY STATE
+========================= */
+
+.emptyState {
+  padding: 60px 20px;
+  text-align: center;
+  color: #777;
+}
+
+.emptyState strong {
+  display: block;
+  margin-bottom: 8px;
+  color: #333;
+  font-size: 16px;
+}
+
+.emptyState p {
+  margin: 0;
+  font-size: 13px;
+}
+
+/* =========================
+   MODAL OVERLAY
+========================= */
 
 .overlay {
   position: fixed;
   inset: 0;
   z-index: 1000;
+
   display: flex;
   align-items: center;
   justify-content: center;
+
   padding: 20px;
-  background: rgba(0, 0, 0, 0.45);
+
+  background: rgba(20, 24, 32, 0.55);
 }
 
+/* =========================
+   MODAL
+========================= */
+
 .modal {
-  width: min(650px, 100%);
+  width: 100%;
+  max-width: 650px;
+  max-height: 90vh;
+
+  overflow-y: auto;
+
   background: #fff;
   border-radius: 12px;
+
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
 }
+
+/* =========================
+   MODAL HEADER
+========================= */
 
 .modalHeader {
   display: flex;
   justify-content: space-between;
+  align-items: flex-start;
+
   padding: 22px 24px;
-  border-bottom: 1px solid #E8DED4;
+
+  border-bottom: 1px solid #e8e8e8;
 }
 
 .modalHeader h2 {
-  margin: 0;
-  font-size: 18px;
+  margin: 0 0 6px;
+  color: #172033;
+  font-size: 20px;
 }
 
 .modalHeader p {
-  margin: 5px 0 0;
-  color: #978F66;
+  margin: 0;
+  color: #777;
   font-size: 13px;
 }
 
 .closeButton {
-  border: 0;
-  background: transparent;
-  font-size: 26px;
+  width: 34px;
+  height: 34px;
+
+  border: none;
+  border-radius: 50%;
+
+  background: #f5f5f5;
+  color: #555;
+
+  font-size: 22px;
+  line-height: 1;
+
   cursor: pointer;
 }
 
-.modal form {
-  padding: 24px;
+.closeButton:hover {
+  background: #e9e9e9;
 }
+
+/* =========================
+   FORM
+========================= */
 
 .formGrid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 18px;
+
+  padding: 24px;
 }
 
 .field {
@@ -163,226 +277,195 @@
 }
 
 .field label {
+  color: #333;
   font-size: 13px;
   font-weight: 600;
 }
 
 .field input,
 .field select {
+  width: 100%;
   box-sizing: border-box;
-  padding: 10px;
-  border: 1px solid #E4D6A9;
+
+  padding: 11px 12px;
+
+  border: 1px solid #d9d9d9;
   border-radius: 7px;
-  font-size: 13px;
+
+  background: #fff;
+  color: #333;
+
+  font-size: 14px;
+
+  outline: none;
 }
 
-.error {
-  color: #dc2626;
-  font-size: 11px;
+.field input:focus,
+.field select:focus {
+  border-color: #c88a2b;
+  box-shadow: 0 0 0 2px rgba(200, 138, 43, 0.1);
 }
+
+.field input::placeholder {
+  color: #aaa;
+}
+.editButton {
+  border: none;
+  background: #f2b353;
+  color: white;
+  padding: 7px 14px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.editButton:hover {
+  opacity: 0.9;
+}
+/* =========================
+   ERROR
+========================= */
+
+.error {
+  color: #d64545;
+  font-size: 12px;
+}
+
+/* =========================
+   ACTIONS
+========================= */
 
 .actions {
   display: flex;
   justify-content: flex-end;
   gap: 10px;
-  margin-top: 24px;
-  padding-top: 20px;
-  border-top: 1px solid #E8DED4;
+
+  padding: 18px 24px;
+
+  border-top: 1px solid #e8e8e8;
 }
 
-@media (max-width: 700px) {
-  .headerActions {
+.secondaryButton {
+  padding: 10px 17px;
+
+  border: 1px solid #d8d8d8;
+  border-radius: 8px;
+
+  background: #fff;
+  color: #555;
+
+  font-size: 14px;
+  font-weight: 500;
+
+  cursor: pointer;
+}
+
+.secondaryButton:hover {
+  background: #f7f7f7;
+}
+
+.secondaryButton:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+.employeeSearchWrapper {
+  position: relative;
+  width: 100%;
+}
+
+.employeeSearchWrapper input {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.employeeDropdown {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  right: 0;
+  z-index: 100;
+  background: #fff;
+  border: 1px solid #d9d9d9;
+  border-radius: 7px;
+  max-height: 220px;
+  overflow-y: auto;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+}
+
+.employeeOption {
+  padding: 10px 12px;
+  cursor: pointer;
   display: flex;
-  align-items: center;
-  gap: 10px;
+  flex-direction: column;
+  gap: 3px;
 }
 
-.header {
+.employeeOption:hover {
+  background: #f7f7f7;
+}
+
+.employeeOption strong {
+  color: #172033;
+  font-size: 14px;
+}
+
+.employeeOption small {
+  color: #888;
+  font-size: 12px;
+}
+
+.noEmployee {
+  padding: 12px;
+  color: #777;
+  font-size: 13px;
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media (max-width: 768px) {
+  .page {
+    padding: 16px;
+  }
+
+  .header {
     flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+  }
+
+  .headerActions {
+    width: 100%;
+    flex-wrap: wrap;
   }
 
   .formGrid {
     grid-template-columns: 1fr;
   }
+
+  .modal {
+    max-height: 95vh;
+  }
 }
 
+@media (max-width: 480px) {
+  .headerActions {
+    flex-direction: column;
+    align-items: stretch;
+  }
 
-/* ================= EMPLOYEE MANAGEMENT VISUAL TOKENS ================= */
+  .navigationButton,
+  .primaryButton {
+    justify-content: center;
+    width: 100%;
+    box-sizing: border-box;
+  }
 
-.page {
-  color: #121212;
-}
-
-.eyebrow {
-  color: #978F66;
-}
-
-.header h1 {
-  color: #121212;
-}
-
-.header p,
-.cardHeader p,
-.emptyState p,
-.modalHeader p {
-  color: #978F66;
-}
-
-.primaryButton {
-  height: 40px;
-  padding: 0 14px;
-  border: none;
-  border-radius: 10px;
-  background: #f2b353;
-  color: #121212;
-  font-family: "Segoe UI", Arial, sans-serif;
-  font-size: 14px;
-  font-weight: 600;
-  box-shadow: 0 5px 14px rgba(153, 95, 47, 0.18);
-  transition: 0.2s ease;
-}
-
-.primaryButton:hover {
-  background: #121212;
-  color: #f2b353;
-}
-
-.viewButton {
-  min-width: 62px;
-  height: 34px;
-  padding: 0 14px;
-  border: 1px solid #E4D6A9;
-  border-radius: 8px;
-  background: #ffffff;
-  color: #995F2F;
-  font-family: inherit;
-  font-size: 12px;
-  font-weight: 600;
-  transition: 0.2s ease;
-}
-
-.viewButton:hover {
-  background: #995F2F;
-  color: #ffffff;
-  border-color: #995F2F;
-}
-
-.secondaryButton {
-  border-color: #E4D6A9;
-  color: #995F2F;
-}
-
-.secondaryButton:hover {
-  background: #F5EADB;
-  border-color: #995F2F;
-  color: #995F2F;
-}
-
-.card,
-.intro {
-  border-color: #E8DED4;
-}
-
-.cardHeader {
-  border-bottom-color: #F0E7D8;
-}
-
-.table th {
-  background: #FFFAF0;
-  color: #978F66;
-}
-
-.table td {
-  border-top-color: #F0E7D8;
-  color: #121212;
-}
-
-.table tbody tr:hover {
-  background: #FFFAF0;
-}
-
-.count {
-  background: #F5EADB;
-  color: #995F2F;
-}
-
-.field input:focus,
-.field select:focus {
-  border-color: #995F2F;
-  box-shadow: 0 0 0 3px rgba(153, 95, 47, 0.1);
-}
-
-.checkboxLabel input {
-  accent-color: #995F2F;
-}
-
-.closeButton {
-  color: #978F66;
-}
-
-.closeButton:hover {
-  color: #995F2F;
-}
-
-.formActions,
-.actions {
-  border-top-color: #F0E7D8;
-}
-
-/* ================= NAVIGATION BUTTON ================= */
-
-.navigationButton {
-  display: inline-flex;
-  align-items: center;
-  justify-content: flex-start;
-  gap: 0;
-  width: 40px;
-  min-width: 40px;
-  height: 38px;
-  padding: 0 11px;
-  overflow: hidden;
-  border: 1px solid #E4D6A9;
-  border-radius: 8px;
-  background: #ffffff;
-  color: #995F2F;
-  text-decoration: none;
-  font-family: "Segoe UI", Arial, sans-serif;
-  font-size: 13px;
-  font-weight: 600;
-  white-space: nowrap;
-  cursor: pointer;
-  transition: width 0.18s ease, gap 0.18s ease, background 0.18s ease, border-color 0.18s ease, color 0.18s ease;
-}
-
-.navigationButton svg {
-  flex: 0 0 auto;
-}
-
-.navigationButton span {
-  width: 0;
-  max-width: 0;
-  margin: 0;
-  overflow: hidden;
-  opacity: 0;
-  transition: width 0.18s ease, max-width 0.18s ease, opacity 0.15s ease;
-}
-
-.navigationButton:hover {
-  width: 190px;
-  gap: 7px;
-  background: #995F2F;
-  border-color: #995F2F;
-  color: #ffffff;
-}
-
-.navigationButton:hover span {
-  width: auto;
-  max-width: 220px;
-  opacity: 1;
-}
-
-.navigationButton:focus-visible {
-  outline: none;
-  border-color: #995F2F;
-  box-shadow: 0 0 0 3px rgba(153, 95, 47, 0.12);
+  .cardHeader {
+    align-items: flex-start;
+    gap: 12px;
+    flex-direction: column;
+  }
 }

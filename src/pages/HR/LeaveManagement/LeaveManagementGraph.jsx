@@ -1,10 +1,10 @@
 import React from "react";
 
-import { leaveRequests } from "./leaveMockData";
+// import { leaveRequests } from "./leaveMockData";
 
 import styles from "./LeaveManagementGraph.module.css";
 
-const LeaveManagementGraph = () => {
+const LeaveManagementGraph = ({ leaveRequests = [] }) => {
   // ==========================
   // LEAVE USAGE
   // ==========================
@@ -67,7 +67,7 @@ const LeaveManagementGraph = () => {
           LEAVE USAGE OVERVIEW
       ========================== */}
 
-      <div
+      {/* <div
         className={[
           styles["leave-chart-card"],
           styles["usage-card"],
@@ -135,7 +135,7 @@ const LeaveManagementGraph = () => {
           </div>
 
         </div>
-      </div>
+      </div> */}
 
 
       {/* ==========================

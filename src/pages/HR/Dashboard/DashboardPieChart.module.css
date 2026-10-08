@@ -16,7 +16,8 @@
 
 .dashboard-bottom-row .dashboard-card {
   width: calc(50% - 10px);
-  height: 360px; /* decreased height */
+  height: 360px;
+  min-width: 0;
   box-sizing: border-box;
 
   background: #ffffff;
@@ -34,6 +35,7 @@
   display: flex;
   flex-direction: column;
   box-sizing: border-box;
+  overflow: hidden;
 }
 
 
@@ -42,14 +44,17 @@
 ========================== */
 
 .attendance-content {
+  width: 100%;
+
   display: flex;
   align-items: center;
   justify-content: center;
 
-  gap: 30px;
-  margin-top: 20px;
+  gap: 22px;
+  margin-top: 15px;
 
   flex: 1;
+  min-width: 0;
 }
 
 
@@ -58,15 +63,19 @@
 ========================== */
 
 .attendance-circle {
-  width: 180px;
-  height: 180px;
+  width: 160px;
+  height: 160px;
 
-  border-radius: 50%;
+  min-width: 160px;
+  min-height: 160px;
+
   flex-shrink: 0;
 
+  border-radius: 50%;
+
   background: conic-gradient(
-    rgb(66, 221, 66)  0deg 240deg,
-    rgb(227, 67, 67)  240deg 340deg,
+    rgb(66, 221, 66) 0deg 240deg,
+    rgb(227, 67, 67) 240deg 340deg,
     orange 340deg 360deg
   );
 
@@ -81,8 +90,8 @@
 ========================== */
 
 .attendance-inner {
-  width: 115px;
-  height: 115px;
+  width: 105px;
+  height: 105px;
 
   border-radius: 50%;
   background: #ffffff;
@@ -94,13 +103,14 @@
 }
 
 .attendance-inner strong {
-  font-size: 32px;
+  font-size: 29px;
+  line-height: 1;
   color: #121212;
 }
 
 .attendance-inner span {
   margin-top: 5px;
-  font-size: 14px;
+  font-size: 12px;
   color: #121212;
 }
 
@@ -110,20 +120,27 @@
 ========================== */
 
 .attendance-details {
+  min-width: 0;
+
   display: flex;
   flex-direction: column;
-  gap: 20px;
+
+  gap: 17px;
 }
 
 .attendance-item {
   display: grid;
-  grid-template-columns: 14px 80px 90px;
+
+  grid-template-columns: 11px minmax(55px, 1fr) auto;
 
   align-items: center;
-  gap: 10px;
+
+  column-gap: 7px;
 
   color: #121212;
-  font-size: 15px;
+  font-size: 13px;
+
+  white-space: nowrap;
 }
 
 .attendance-item b {
@@ -136,8 +153,8 @@
 ========================== */
 
 .attendance-dot {
-  width: 13px;
-  height: 13px;
+  width: 10px;
+  height: 10px;
   border-radius: 50%;
 }
 
@@ -146,7 +163,7 @@
 }
 
 .attendance-dot.leave {
-  background: rgb(199, 25, 25);;
+  background: rgb(199, 25, 25);
 }
 
 .attendance-dot.absent {
@@ -159,10 +176,10 @@
 ========================== */
 
 .attendance-button {
-  width: 200px;
+  width: 190px;
   height: 42px;
 
-  margin: 10px auto 0;
+  margin: 8px auto 0;
 
   border: none;
   border-radius: 10px;
@@ -174,9 +191,9 @@
   align-items: center;
   justify-content: center;
 
-  gap: 10px;
+  gap: 8px;
 
-  font-size: 15px;
+  font-size: 14px;
   cursor: pointer;
 }
 
@@ -188,18 +205,13 @@
 .announcements-card {
   padding: 20px;
   box-sizing: border-box;
+  min-width: 0;
 }
-
-
-/* ==========================
-   ANNOUNCEMENT TITLE
-========================== */
 
 .announcements-card h3 {
   margin: 0;
 
   color: #121212;
-
   font-size: 24px;
   font-weight: 600;
 }
@@ -228,6 +240,7 @@
   align-items: flex-start;
 
   gap: 12px;
+  min-width: 0;
 
   color: #121212;
 }
@@ -243,8 +256,11 @@
 ========================== */
 
 .announcement-info {
+  min-width: 0;
+
   display: flex;
   align-items: center;
+
   gap: 4px;
 }
 
@@ -256,6 +272,7 @@
 .announcement-info span {
   font-size: 14px;
   color: #121212;
+  white-space: nowrap;
 }
 
 
@@ -282,29 +299,638 @@
 }
 
 
-/* ==========================
-   RESPONSIVE
-========================== */
+/* =========================================================
+   TABLET
+   601px - 900px
+========================================================= */
+/* =========================================================
+   TABLET
+   601px - 900px
+   Keep both cards SIDE-BY-SIDE
+========================================================= */
 
-@media (max-width: 900px) {
+@media (max-width: 900px) and (min-width: 601px) {
+
   .dashboard-bottom-row {
-    flex-direction: column;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    gap: 16px;
+    align-items: stretch;
   }
 
   .dashboard-bottom-row .dashboard-card {
+    width: calc(50% - 8px);
+    height: 330px;
+    min-width: 0;
+  }
+
+
+  /* ==========================
+     ATTENDANCE TABLET
+  ========================== */
+
+  .attendance-card {
+    padding: 16px;
+  }
+
+  .attendance-content {
     width: 100%;
-    height: auto;
-    min-height: 360px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    margin-top: 10px;
+  }
+
+  .attendance-circle {
+    width: 125px;
+    height: 125px;
+    min-width: 125px;
+    min-height: 125px;
+  }
+
+  .attendance-inner {
+    width: 82px;
+    height: 82px;
+  }
+
+  .attendance-inner strong {
+    font-size: 24px;
+  }
+
+  .attendance-inner span {
+    font-size: 10px;
+    margin-top: 3px;
+  }
+
+  .attendance-details {
+    min-width: 0;
+    width: 125px;
+    gap: 13px;
+  }
+
+  .attendance-item {
+    width: 100%;
+    grid-template-columns: 9px 1fr auto;
+    column-gap: 5px;
+    font-size: 11px;
+  }
+
+  .attendance-dot {
+    width: 8px;
+    height: 8px;
+  }
+
+  .attendance-button {
+    width: 155px;
+    height: 38px;
+    margin: 8px auto 0;
+    font-size: 12px;
+  }
+
+
+  /* ==========================
+     ANNOUNCEMENTS TABLET
+  ========================== */
+
+  .announcements-card {
+    padding: 16px;
+  }
+
+  .announcements-card h3 {
+    font-size: 20px;
+  }
+
+  .announcement-list {
+    margin-top: 16px;
+    gap: 15px;
+  }
+
+  .announcement-item {
+    gap: 8px;
+  }
+
+  .announcement-info {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 2px;
+  }
+
+  .announcement-info strong {
+    font-size: 12px;
+    line-height: 1.3;
+  }
+
+  .announcement-info span {
+    font-size: 10px;
+  }
+
+  .view-all-button {
+    margin-left: 0;
+    margin-top: 15px;
+    font-size: 12px;
   }
 }
 
-@media (max-width: 600px) {
+
+/* =========================================================
+   TABLET
+   601px - 900px
+   Cards stay SIDE-BY-SIDE
+========================================================= */
+
+@media (max-width: 900px) and (min-width: 601px) {
+
+  .dashboard-bottom-row {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    gap: 16px;
+  }
+
+  .dashboard-bottom-row .dashboard-card {
+    width: calc(50% - 8px);
+    height: 330px;
+    min-width: 0;
+  }
+
+  /* Attendance */
+
+  .attendance-card {
+    padding: 16px;
+  }
+
   .attendance-content {
-    flex-direction: column;
+    gap: 12px;
+  }
+
+  .attendance-circle {
+    width: 125px;
+    height: 125px;
+    min-width: 125px;
+    min-height: 125px;
+  }
+
+  .attendance-inner {
+    width: 82px;
+    height: 82px;
+  }
+
+  .attendance-inner strong {
+    font-size: 24px;
+  }
+
+  .attendance-inner span {
+    font-size: 10px;
+  }
+
+  .attendance-details {
+    width: 125px;
+    gap: 13px;
+  }
+
+  .attendance-item {
+    grid-template-columns: 9px 1fr auto;
+    column-gap: 5px;
+    font-size: 11px;
+  }
+
+  .attendance-dot {
+    width: 8px;
+    height: 8px;
+  }
+
+  .attendance-button {
+    width: 155px;
+    height: 38px;
+    font-size: 12px;
+  }
+
+  /* Announcements */
+
+  .announcements-card {
+    padding: 16px;
+  }
+
+  .announcements-card h3 {
+    font-size: 20px;
+  }
+
+  .announcement-list {
+    margin-top: 16px;
+    gap: 15px;
   }
 
   .announcement-info {
     flex-direction: column;
     align-items: flex-start;
+    gap: 2px;
+  }
+
+  .announcement-info strong {
+    font-size: 12px;
+  }
+
+  .announcement-info span {
+    font-size: 10px;
+  }
+
+  .view-all-button {
+    margin-left: 0;
+    font-size: 12px;
+  }
+}
+
+
+/* =========================================================
+   MOBILE
+   600px and below
+   Cards STACK VERTICALLY
+========================================================= */
+
+@media (max-width: 600px) {
+
+  .dashboard-bottom-row {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  .dashboard-bottom-row .dashboard-card {
+    width: 100%;
+    height: auto;
+    min-height: 0;
+  }
+
+
+  /* ==========================
+     ATTENDANCE
+  ========================== */
+
+  .attendance-card {
+    padding: 18px 16px;
+  }
+
+  .attendance-content {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    margin-top: 8px;
+  }
+
+  .attendance-circle {
+    width: 135px;
+    height: 135px;
+    min-width: 135px;
+    min-height: 135px;
+    margin: 0 auto;
+  }
+
+  .attendance-inner {
+    width: 85px;
+    height: 85px;
+  }
+
+  .attendance-inner strong {
+    font-size: 24px;
+  }
+
+  .attendance-inner span {
+    font-size: 11px;
+  }
+
+  .attendance-details {
+    width: 100%;
+    max-width: 210px;
+    margin: 0 auto;
+    gap: 10px;
+  }
+
+  .attendance-item {
+    width: 100%;
+    grid-template-columns: 10px 1fr auto;
+    column-gap: 7px;
+    font-size: 12px;
+  }
+
+  .attendance-dot {
+    width: 9px;
+    height: 9px;
+  }
+
+  .attendance-button {
+    width: 170px;
+    height: 38px;
+    margin: 15px auto 2px;
+    font-size: 12px;
+  }
+
+
+  /* ==========================
+     ANNOUNCEMENTS
+  ========================== */
+
+  .announcements-card {
+    padding: 18px 16px;
+  }
+
+  .announcements-card h3 {
+    font-size: 20px;
+  }
+
+  .announcement-list {
+    margin-top: 16px;
+    gap: 16px;
+  }
+
+  .announcement-item {
+    gap: 9px;
+  }
+
+  .announcement-info {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 2px;
+  }
+
+  .announcement-info strong {
+    font-size: 13px;
+    line-height: 1.35;
+  }
+
+  .announcement-info span {
+    font-size: 11px;
+  }
+
+  .view-all-button {
+    margin-left: 0;
+    margin-top: 16px;
+    font-size: 12px;
+  }
+}
+
+
+/* =========================================================
+   SMALL MOBILE
+   400px and below
+   COMPACT SIZING
+========================================================= */
+
+@media (max-width: 400px) {
+
+  .dashboard-bottom-row {
+    gap: 12px;
+  }
+
+  .dashboard-bottom-row .dashboard-card {
+    border-radius: 10px;
+  }
+
+
+  /* ==========================
+     ATTENDANCE COMPACT
+  ========================== */
+
+  .attendance-card {
+    padding: 16px 12px;
+  }
+
+  .attendance-content {
+    gap: 13px;
+  }
+
+  .attendance-circle {
+    width: 120px;
+    height: 120px;
+    min-width: 120px;
+    min-height: 120px;
+  }
+
+  .attendance-inner {
+    width: 76px;
+    height: 76px;
+  }
+
+  .attendance-inner strong {
+    font-size: 21px;
+  }
+
+  .attendance-inner span {
+    font-size: 10px;
+    margin-top: 2px;
+  }
+
+  .attendance-details {
+    max-width: 190px;
+    gap: 8px;
+  }
+
+  .attendance-item {
+    font-size: 11px;
+    grid-template-columns: 9px 1fr auto;
+    column-gap: 6px;
+  }
+
+  .attendance-dot {
+    width: 8px;
+    height: 8px;
+  }
+
+  .attendance-button {
+    width: 155px;
+    height: 35px;
+    margin-top: 12px;
+    font-size: 11px;
+  }
+
+
+  /* ==========================
+     ANNOUNCEMENTS COMPACT
+  ========================== */
+
+  .announcements-card {
+    padding: 15px 12px;
+  }
+
+  .announcements-card h3 {
+    font-size: 18px;
+  }
+
+  .announcement-list {
+    margin-top: 13px;
+    gap: 12px;
+  }
+
+  .announcement-item {
+    gap: 8px;
+  }
+
+  .announcement-item svg {
+    width: 17px;
+    height: 17px;
+  }
+
+  .announcement-info strong {
+    font-size: 12px;
+    line-height: 1.3;
+  }
+
+  .announcement-info span {
+    font-size: 10px;
+  }
+
+  .view-all-button {
+    margin-top: 13px;
+    font-size: 11px;
+  }
+}
+
+
+/* =========================================================
+   EXTRA SMALL MOBILE
+   350px and below
+========================================================= */
+
+@media (max-width: 350px) {
+
+  .attendance-circle {
+    width: 110px;
+    height: 110px;
+    min-width: 110px;
+    min-height: 110px;
+  }
+
+  .attendance-inner {
+    width: 70px;
+    height: 70px;
+  }
+
+  .attendance-inner strong {
+    font-size: 19px;
+  }
+
+  .attendance-inner span {
+    font-size: 9px;
+  }
+
+  .attendance-details {
+    max-width: 180px;
+  }
+
+  .attendance-item {
+    font-size: 10px;
+  }
+
+  .attendance-button {
+    width: 145px;
+    height: 33px;
+    font-size: 10px;
+  }
+
+  .announcements-card h3 {
+    font-size: 17px;
+  }
+
+  .announcement-info strong {
+    font-size: 11px;
+  }
+
+  .announcement-info span {
+    font-size: 9px;
+  }
+}
+/* =========================================================
+   EXTRA SMALL MOBILE
+   320px AND BELOW
+========================================================= */
+
+@media (max-width: 320px) {
+
+  .attendance-card {
+    padding: 12px 8px;
+  }
+
+  .attendance-content {
+    gap: 12px;
+  }
+
+  .attendance-circle {
+    width: 110px;
+    height: 110px;
+    min-width: 110px;
+    min-height: 110px;
+  }
+
+  .attendance-inner {
+    width: 68px;
+    height: 68px;
+  }
+
+  .attendance-inner strong {
+    font-size: 19px;
+  }
+
+  .attendance-inner span {
+    font-size: 9px;
+  }
+
+  .attendance-details {
+    max-width: 170px;
+    gap: 7px;
+  }
+
+  .attendance-item {
+    font-size: 10px;
+    grid-template-columns: 8px 1fr auto;
+    column-gap: 5px;
+  }
+
+  .attendance-dot {
+    width: 7px;
+    height: 7px;
+  }
+
+  .attendance-button {
+    width: 140px;
+    height: 33px;
+    font-size: 10px;
+  }
+
+  .announcements-card {
+    padding: 12px 8px;
+  }
+
+  .announcements-card h3 {
+    font-size: 16px;
+  }
+
+  .announcement-list {
+    margin-top: 12px;
+    gap: 10px;
+  }
+
+  .announcement-item {
+    gap: 7px;
+  }
+
+  .announcement-info strong {
+    font-size: 10px;
+    line-height: 1.3;
+  }
+
+  .announcement-info span {
+    font-size: 9px;
+  }
+
+  .view-all-button {
+    margin-top: 12px;
+    font-size: 10px;
   }
 }

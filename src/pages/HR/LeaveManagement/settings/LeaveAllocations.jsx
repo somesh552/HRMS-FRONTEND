@@ -1,185 +1,161 @@
-
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Settings } from "lucide-react";
+import { employeeApi } from "../../../../services/api/employee.api";
+import { leaveTypesApi } from "../../../../services/api/leaveTypes.api";
+import { leavePeriodsApi } from "../../../../services/api/leavePeriods.api";
+import { leaveAllocationsApi } from "../../../../services/api/leaveAllocations.api";
 
 import styles from "./LeaveAllocations.module.css";
 
-const API_URL = "http://localhost:3000/leave-allocations";
-
-/*
- * Leave Types
- * IDs should match your database
- */
-const leaveTypes = [
-  {
-    id: 1,
-    name: "Casual Leave",
-  },
-  {
-    id: 2,
-    name: "Sick Leave",
-  },
-  {
-    id: 3,
-    name: "Earned Leave",
-  },
-];
-
-/*
- * Employees
- * IDs should match your database
- */
-const employees = [
-  {
-    id: 1,
-    employeeCode: "EMP-125",
-    name: "Ravi Kumar",
-  },
-  {
-    id: 2,
-    employeeCode: "EMP-124",
-    name: "Priya Sharma",
-  },
-  {
-    id: 3,
-    employeeCode: "EMP-123",
-    name: "Arjun Reddy",
-  },
-];
-
-/*
- * Initial Form
- *
- * These names are exactly the same
- * as your backend fields.
- */
 const initialForm = {
   employee_id: "",
   leave_type_id: "",
-  leave_period_id: 1,
+  leave_period_id: "",
   total_leaves_allocated: "",
   carry_forward_leaves: "0",
 };
 
 const LeaveAllocations = () => {
   const [allocations, setAllocations] = useState([]);
-
-  const [isFormOpen, setIsFormOpen] = useState(false);
+  const [employees, setEmployees] = useState([]);
+  const [leaveTypes, setLeaveTypes] = useState([]);
+  const [leavePeriods, setLeavePeriods] = useState([]);
 
   const [form, setForm] = useState(initialForm);
-
   const [errors, setErrors] = useState({});
+  const [isFormOpen, setIsFormOpen] = useState(false);
+  const [editingId, setEditingId] = useState(null);
 
-  const [loading, setLoading] = useState(false);
-
+  const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
+  const [employeeSearch, setEmployeeSearch] = useState("");
 
-  const [errorMessage, setErrorMessage] = useState("");
+  // ==========================================
+  // LOAD DATA
+  // ==========================================
 
-  const [successMessage, setSuccessMessage] = useState("");
+  useEffect(() => {
+    loadData();
+  }, []);
 
-  /*
-   * GET ALL LEAVE ALLOCATIONS
-   */
-  const fetchAllocations = async () => {
+  const loadData = async () => {
     try {
       setLoading(true);
-      setErrorMessage("");
 
-      const response = await fetch(API_URL);
+      const [
+        allocationsResponse,
+        employeesResponse,
+        leaveTypesResponse,
+        leavePeriodsResponse,
+      ] = await Promise.all([
+        leaveAllocationsApi.getAll(),
+        employeeApi.getAll(),
+        leaveTypesApi.getAll(),
+        leavePeriodsApi.getAll(),
+      ]);
 
-      const result = await response.json();
-
-      if (!response.ok) {
-        throw new Error(
-          result.message ||
-            "Failed to fetch leave allocations"
-        );
-      }
-
-      const backendData = result.data || [];
-
-      /*
-       * Convert backend data into the
-       * format required by the table.
-       */
-      const formattedData = backendData.map(
-        (allocation) => {
-          const employee = employees.find(
-            (item) =>
-              item.id ===
-              Number(allocation.employee_id)
-          );
-
-          const leaveType = leaveTypes.find(
-            (item) =>
-              item.id ===
-              Number(allocation.leave_type_id)
-          );
-
-          return {
-            id: allocation.id,
-
-            employeeId:
-              employee?.employeeCode ||
-              `EMP-${allocation.employee_id}`,
-
-            employee:
-              employee?.name ||
-              `Employee ${allocation.employee_id}`,
-
-            leaveType:
-              leaveType?.name ||
-              `Leave Type ${allocation.leave_type_id}`,
-
-            period: `Leave Period ${allocation.leave_period_id}`,
-
-            allocated: Number(
-              allocation.total_leaves_allocated
-            ),
-
-            carryForward: Number(
-              allocation.carry_forward_leaves
-            ),
-
-            used: Number(
-              allocation.used_leaves
-            ),
-
-            remaining: Number(
-              allocation.remaining_leaves
-            ),
-          };
-        }
+      console.log(
+        "Allocations Response:",
+        allocationsResponse
       );
 
-      setAllocations(formattedData);
+      console.log(
+        "Employees Response:",
+        employeesResponse
+      );
+
+      console.log(
+        "Leave Types Response:",
+        leaveTypesResponse
+      );
+
+      console.log(
+        "Leave Periods Response:",
+        leavePeriodsResponse
+      );
+
+      // Convert all responses into arrays
+      const allocationsData =
+        getArray(allocationsResponse);
+
+      const employeesData =
+        getArray(employeesResponse);
+
+      const leaveTypesData =
+        getArray(leaveTypesResponse);
+
+      const leavePeriodsData =
+        getArray(leavePeriodsResponse);
+
+      console.log(
+        "FINAL ALLOCATIONS:",
+        allocationsData
+      );
+
+      console.log(
+        "FINAL EMPLOYEES:",
+        employeesData
+      );
+
+      console.log(
+        "FINAL LEAVE TYPES:",
+        leaveTypesData
+      );
+
+      console.log(
+        "FINAL LEAVE PERIODS:",
+        leavePeriodsData
+      );
+
+      setAllocations(allocationsData);
+      setEmployees(employeesData);
+      setLeaveTypes(leaveTypesData);
+      setLeavePeriods(leavePeriodsData);
+
     } catch (error) {
       console.error(
-        "Error fetching allocations:",
+        "Failed to load leave allocation data:",
         error
       );
 
-      setErrorMessage(
-        error.message ||
-          "Unable to load leave allocations."
+      alert(
+        error?.response?.data?.message ||
+        "Failed to load leave allocation data."
       );
     } finally {
       setLoading(false);
     }
   };
 
-  /*
-   * GET DATA WHEN PAGE OPENS
-   */
-  useEffect(() => {
-    fetchAllocations();
-  }, []);
+  // ==========================================
+  // HANDLE API RESPONSE
+  // ==========================================
 
-  /*
-   * FORM CHANGE
-   */
+  const getArray = (response) => {
+    if (Array.isArray(response)) {
+      return response;
+    }
+
+    if (Array.isArray(response?.data)) {
+      return response.data;
+    }
+
+    if (Array.isArray(response?.data?.data)) {
+      return response.data.data;
+    }
+
+    if (Array.isArray(response?.value)) {
+      return response.value;
+    }
+
+    return [];
+  };
+
+  // ==========================================
+  // FORM CHANGE
+  // ==========================================
+
   const handleChange = (event) => {
     const { name, value } = event.target;
 
@@ -192,172 +168,324 @@ const LeaveAllocations = () => {
       ...current,
       [name]: "",
     }));
-
-    setErrorMessage("");
   };
 
-  /*
-   * SUBMIT FORM
-   */
-  const handleSubmit = async (event) => {
-    event.preventDefault();
+  // ==========================================
+  // VALIDATION
+  // ==========================================
 
+  const validate = () => {
     const nextErrors = {};
 
-    /*
-     * Employee validation
-     */
     if (!form.employee_id) {
-      nextErrors.employee_id =
-        "Employee is required.";
+      nextErrors.employee_id = "Employee is required.";
     }
 
-    /*
-     * Leave type validation
-     */
     if (!form.leave_type_id) {
-      nextErrors.leave_type_id =
-        "Leave type is required.";
+      nextErrors.leave_type_id = "Leave type is required.";
     }
 
-    /*
-     * Allocation validation
-     */
+    if (!form.leave_period_id) {
+      nextErrors.leave_period_id = "Leave period is required.";
+    }
+
     if (!form.total_leaves_allocated) {
       nextErrors.total_leaves_allocated =
-        "Allocation is required.";
+        "Allocated leaves are required.";
     } else if (
       Number(form.total_leaves_allocated) <= 0
     ) {
       nextErrors.total_leaves_allocated =
-        "Allocation must be greater than 0.";
+        "Allocated leaves must be greater than 0.";
     }
 
-    /*
-     * Carry forward validation
-     */
-    if (
-      Number(form.carry_forward_leaves) < 0
-    ) {
+    if (Number(form.carry_forward_leaves) < 0) {
       nextErrors.carry_forward_leaves =
-        "Carry-forward cannot be negative.";
+        "Carry forward cannot be negative.";
     }
 
-    if (Object.keys(nextErrors).length > 0) {
-      setErrors(nextErrors);
+    return nextErrors;
+  };
+
+  // ==========================================
+  // CREATE / UPDATE ALLOCATION
+  // ==========================================
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+
+    const validationErrors = validate();
+
+    if (Object.keys(validationErrors).length) {
+      setErrors(validationErrors);
       return;
     }
 
     try {
       setSaving(true);
 
-      setErrorMessage("");
-      setSuccessMessage("");
+      // ==========================================
+      // UPDATE
+      // ==========================================
 
-      /*
-       * Request body uses EXACT backend names.
-       */
-      const requestBody = {
-        employee_id: Number(
-          form.employee_id
-        ),
+      if (editingId) {
+        const existingAllocation = allocations.find(
+          (item) =>
+            Number(item.id) === Number(editingId)
+        );
 
-        leave_type_id: Number(
-          form.leave_type_id
-        ),
+        const updatePayload = {
+          employee_id: Number(form.employee_id),
 
-        leave_period_id: Number(
-          form.leave_period_id
-        ),
+          leave_type_id: Number(
+            form.leave_type_id
+          ),
 
-        total_leaves_allocated: Number(
-          form.total_leaves_allocated
-        ),
+          leave_period_id: Number(
+            form.leave_period_id
+          ),
 
-        carry_forward_leaves: Number(
-          form.carry_forward_leaves || 0
-        ),
-      };
+          total_leaves_allocated: Number(
+            form.total_leaves_allocated
+          ),
 
-      console.log(
-        "Sending request:",
-        requestBody
-      );
+          carry_forward_leaves: Number(
+            form.carry_forward_leaves || 0
+          ),
 
-      /*
-       * POST API
-       */
-      const response = await fetch(API_URL, {
-        method: "POST",
+          used_leaves: Number(
+            existingAllocation?.used_leaves || 0
+          ),
+        };
 
-        headers: {
-          "Content-Type": "application/json",
-        },
+        console.log(
+          "Updating allocation:",
+          editingId,
+          updatePayload
+        );
 
-        body: JSON.stringify(requestBody),
-      });
+        await leaveAllocationsApi.update(
+          editingId,
+          updatePayload
+        );
 
-      const result = await response.json();
-
-      console.log(
-        "Backend response:",
-        result
-      );
-
-      if (!response.ok) {
-        throw new Error(
-          result.message ||
-            "Failed to allocate leave"
+        alert(
+          "Leave allocation updated successfully."
         );
       }
 
-      /*
-       * Success
-       */
-      setSuccessMessage(
-        "Leave allocated successfully."
-      );
+      // ==========================================
+      // CREATE
+      // ==========================================
 
-      /*
-       * Reset form
-       */
-      setForm(initialForm);
+      else {
+        const createPayload = {
+          employee_id: Number(form.employee_id),
 
-      setErrors({});
+          leave_type_id: Number(
+            form.leave_type_id
+          ),
 
-      /*
-       * Close modal
-       */
-      setIsFormOpen(false);
+          leave_period_id: Number(
+            form.leave_period_id
+          ),
 
-      /*
-       * Reload table from database
-       */
-      await fetchAllocations();
+          total_leaves_allocated: Number(
+            form.total_leaves_allocated
+          ),
 
-      /*
-       * Remove success message
-       */
-      setTimeout(() => {
-        setSuccessMessage("");
-      }, 3000);
+          carry_forward_leaves: Number(
+            form.carry_forward_leaves || 0
+          ),
+        };
+
+        console.log(
+          "Creating allocation:",
+          createPayload
+        );
+
+        await leaveAllocationsApi.create(
+          createPayload
+        );
+
+        alert(
+          "Leave allocated successfully."
+        );
+      }
+
+      // Refresh table
+      await loadData();
+
+      // Close modal
+      closeForm();
     } catch (error) {
       console.error(
-        "Error creating leave allocation:",
+        editingId
+          ? "Update allocation error:"
+          : "Create allocation error:",
         error
       );
 
-      setErrorMessage(
-        error.message ||
-          "Failed to allocate leave."
+      alert(
+        error?.response?.data?.message ||
+        (
+          editingId
+            ? "Failed to update leave allocation."
+            : "Failed to create leave allocation."
+        )
       );
     } finally {
       setSaving(false);
     }
   };
 
+  // ==========================================
+  // OPEN EDIT
+  // ==========================================
+
+  const openEdit = (allocation) => {
+    setEditingId(allocation.id);
+
+    setForm({
+      employee_id: String(
+        allocation.employee_id
+      ),
+
+      leave_type_id: String(
+        allocation.leave_type_id
+      ),
+
+      leave_period_id: String(
+        allocation.leave_period_id
+      ),
+
+      total_leaves_allocated: String(
+        allocation.total_leaves_allocated ?? ""
+      ),
+
+      carry_forward_leaves: String(
+        allocation.carry_forward_leaves ?? 0
+      ),
+    });
+
+    setErrors({});
+    setIsFormOpen(true);
+  };
+
+  // ==========================================
+  // OPEN ADD
+  // ==========================================
+
+  const openAdd = () => {
+    setEditingId(null);
+    setForm(initialForm);
+    setErrors({});
+    setIsFormOpen(true);
+  };
+
+  // ==========================================
+  // CLOSE FORM
+  // ==========================================
+
+  const closeForm = () => {
+    setEditingId(null);
+    setForm(initialForm);
+    setErrors({});
+    setIsFormOpen(false);
+  };
+
+  // ==========================================
+  // DISPLAY HELPERS
+  // ==========================================
+
+  const getEmployeeName = (employeeId) => {
+    const employee = employees.find(
+      (item) =>
+        Number(item.id) === Number(employeeId)
+    );
+
+    if (!employee) {
+      return `Employee ${employeeId}`;
+    }
+
+    const fullName =
+      `${employee.first_name || ""} ${employee.last_name || ""
+        }`.trim();
+
+    return (
+      fullName ||
+      employee.name ||
+      employee.employee_name ||
+      employee.employee_code ||
+      `Employee ${employeeId}`
+    );
+  };
+
+  const getEmployeeCode = (employeeId) => {
+    const employee = employees.find(
+      (item) =>
+        Number(item.id) === Number(employeeId)
+    );
+
+    return (
+      employee?.employee_code ||
+      employeeId
+    );
+  };
+
+
+  const filteredEmployees = employees.filter((employee) => {
+    const name =
+      `${employee.first_name || ""} ${employee.last_name || ""}`
+        .toLowerCase();
+
+    const code =
+      (employee.employee_code || "").toLowerCase();
+
+    const search =
+      employeeSearch.toLowerCase().trim();
+
+    return (
+      name.includes(search) ||
+      code.includes(search)
+    );
+  });
+  const getLeaveTypeName = (leaveTypeId) => {
+    const leaveType = leaveTypes.find(
+      (item) =>
+        Number(item.id ?? item.leave_type_id) ===
+        Number(leaveTypeId)
+    );
+
+    return (
+      leaveType?.leave_type_name ||
+      leaveType?.name ||
+      `Leave Type ${leaveTypeId}`
+    );
+  };
+
+  const getPeriodName = (periodId) => {
+    const period = leavePeriods.find(
+      (item) =>
+        Number(item.id ?? item.leave_period_id) ===
+        Number(periodId)
+    );
+
+    return (
+      period?.period_name ||
+      period?.periodName ||
+      period?.name ||
+      `Period ${periodId}`
+    );
+  };
+
+  // ==========================================
+  // UI
+  // ==========================================
+
   return (
     <div className={styles.page}>
+
       {/* HEADER */}
 
       <div className={styles.header}>
@@ -366,10 +494,10 @@ const LeaveAllocations = () => {
         </div>
 
         <div className={styles.headerActions}>
+
           <Link
             to="/hr/leave-management/settings"
             className={styles.navigationButton}
-            aria-label="Back to Settings"
           >
             <Settings
               size={16}
@@ -384,153 +512,173 @@ const LeaveAllocations = () => {
           <button
             type="button"
             className={styles.primaryButton}
-            onClick={() => {
-              setForm(initialForm);
-              setErrors({});
-              setErrorMessage("");
-              setIsFormOpen(true);
-            }}
+            onClick={openAdd}
           >
             + Allocate Leave
           </button>
+
         </div>
       </div>
-
-      {/* SUCCESS MESSAGE */}
-
-      {successMessage && (
-        <div
-          style={{
-            padding: "12px 16px",
-            marginBottom: "15px",
-            background: "#e8f7ee",
-            color: "#1f7a45",
-            borderRadius: "8px",
-          }}
-        >
-          {successMessage}
-        </div>
-      )}
-
-      {/* ERROR MESSAGE */}
-
-      {errorMessage && (
-        <div
-          style={{
-            padding: "12px 16px",
-            marginBottom: "15px",
-            background: "#fdecec",
-            color: "#c62828",
-            borderRadius: "8px",
-          }}
-        >
-          {errorMessage}
-        </div>
-      )}
 
       {/* TABLE */}
 
       <div className={styles.card}>
+
         <div className={styles.cardHeader}>
+
           <div>
             <h2>
               Employee Leave Allocations
             </h2>
 
             <p>
-              Leave quota assigned to employees
-              for the active leave period.
+              Leave quota assigned to
+              employees for the leave
+              period.
             </p>
           </div>
+
+          <span className={styles.count}>
+            {allocations.length} Allocations
+          </span>
+
         </div>
 
-        <div className={styles.tableWrapper}>
-          <table className={styles.table}>
-            <thead>
-              <tr>
-                <th>Employee</th>
-                <th>Leave Type</th>
-                <th>Period</th>
-                <th>Allocated</th>
-                <th>Carry Forward</th>
-                <th>Used</th>
-                <th>Remaining</th>
-              </tr>
-            </thead>
+        {loading ? (
+          <div className={styles.emptyState}>
+            Loading allocations...
+          </div>
+        ) : allocations.length === 0 ? (
+          <div className={styles.emptyState}>
 
-            <tbody>
-              {loading ? (
+            <strong>
+              No leave allocations found
+            </strong>
+
+            <p>
+              Click "Allocate Leave" to
+              create one.
+            </p>
+
+          </div>
+        ) : (
+          <div className={styles.tableWrapper}>
+
+            <table className={styles.table}>
+
+              <thead>
                 <tr>
-                  <td
-                    colSpan="7"
-                    style={{
-                      textAlign: "center",
-                      padding: "30px",
-                    }}
-                  >
-                    Loading...
-                  </td>
+                  <th>Employee</th>
+                  <th>Leave Type</th>
+                  <th>Period</th>
+                  <th>Allocated</th>
+                  <th>Carry Forward</th>
+                  <th>Used</th>
+                  <th>Remaining</th>
+                  <th>Actions</th>
                 </tr>
-              ) : allocations.length === 0 ? (
-                <tr>
-                  <td
-                    colSpan="7"
-                    style={{
-                      textAlign: "center",
-                      padding: "30px",
-                    }}
-                  >
-                    No leave allocations found.
-                  </td>
-                </tr>
-              ) : (
-                allocations.map(
-                  (allocation) => (
-                    <tr
-                      key={allocation.id}
-                    >
-                      <td>
-                        <strong>
-                          {allocation.employee}
-                        </strong>
+              </thead>
 
-                        <small>
-                          {allocation.employeeId}
-                        </small>
-                      </td>
+              <tbody>
 
-                      <td>
-                        {allocation.leaveType}
-                      </td>
+                {allocations.map(
+                  (allocation) => {
 
-                      <td>
-                        {allocation.period}
-                      </td>
+                    const allocated =
+                      Number(
+                        allocation.total_leaves_allocated ||
+                        0
+                      );
 
-                      <td>
-                        {allocation.allocated}
-                      </td>
+                    const carryForward =
+                      Number(
+                        allocation.carry_forward_leaves ||
+                        0
+                      );
 
-                      <td>
-                        {allocation.carryForward}
-                      </td>
+                    const used =
+                      Number(
+                        allocation.used_leaves ||
+                        0
+                      );
 
-                      <td>
-                        {allocation.used}
-                      </td>
+                    const remaining =
+                      Number(
+                        allocation.remaining_leaves ??
+                        allocated +
+                        carryForward -
+                        used
+                      );
 
-                      <td>
-                        <strong>
-                          {allocation.remaining}
-                        </strong>
-                      </td>
-                    </tr>
-                  )
-                )
-              )}
-            </tbody>
-          </table>
-        </div>
+                    return (
+                      <tr
+                        key={allocation.id}
+                      >
+
+                        <td>
+                          <strong>
+                            {getEmployeeName(allocation.employee_id)}
+                          </strong>
+                        </td>
+
+                        <td>
+                          {getLeaveTypeName(
+                            allocation.leave_type_id
+                          )}
+                        </td>
+
+                        <td>
+                          {getPeriodName(
+                            allocation.leave_period_id
+                          )}
+                        </td>
+
+                        <td>
+                          {allocated}
+                        </td>
+
+                        <td>
+                          {carryForward}
+                        </td>
+
+                        <td>
+                          {used}
+                        </td>
+
+                        <td>
+                          <strong>
+                            {remaining}
+                          </strong>
+                        </td>
+
+                        <td>
+                          <button
+                            type="button"
+                            className={
+                              styles.editButton
+                            }
+                            onClick={() =>
+                              openEdit(
+                                allocation
+                              )
+                            }
+                          >
+                            Edit
+                          </button>
+                        </td>
+
+                      </tr>
+                    );
+                  }
+                )}
+
+              </tbody>
+
+            </table>
+
+          </div>
+        )}
+
       </div>
 
       {/* MODAL */}
@@ -538,94 +686,143 @@ const LeaveAllocations = () => {
       {isFormOpen && (
         <div
           className={styles.overlay}
-          onMouseDown={() =>
-            setIsFormOpen(false)
-          }
+          onMouseDown={closeForm}
         >
+
           <div
             className={styles.modal}
             onMouseDown={(event) =>
               event.stopPropagation()
             }
           >
-            {/* MODAL HEADER */}
 
-            <div className={styles.modalHeader}>
+            <div
+              className={
+                styles.modalHeader
+              }
+            >
+
               <div>
+
                 <h2>
-                  Allocate Leave
+                  {editingId
+                    ? "Edit Leave Allocation"
+                    : "Allocate Leave"}
                 </h2>
 
                 <p>
-                  Assign leave quota to an
-                  employee.
+                  {editingId
+                    ? "Update employee leave quota."
+                    : "Assign leave quota to an employee."}
                 </p>
+
               </div>
 
               <button
                 type="button"
-                className={styles.closeButton}
-                onClick={() =>
-                  setIsFormOpen(false)
+                className={
+                  styles.closeButton
                 }
+                onClick={closeForm}
               >
                 ×
               </button>
+
             </div>
 
-            <form onSubmit={handleSubmit}>
-              <div className={styles.formGrid}>
+            <form
+              onSubmit={handleSubmit}
+            >
+
+              <div
+                className={
+                  styles.formGrid
+                }
+              >
+
                 {/* EMPLOYEE */}
 
                 <div className={styles.field}>
-                  <label htmlFor="employee_id">
+                  <label htmlFor="employeeSearch">
                     Employee
                   </label>
 
-                  <select
-                    id="employee_id"
-                    name="employee_id"
-                    value={
-                      form.employee_id
-                    }
-                    onChange={handleChange}
-                  >
-                    <option value="">
-                      Select employee
-                    </option>
+                  <div className={styles.employeeSearchWrapper}>
+                    <input
+                      id="employeeSearch"
+                      type="text"
+                      value={
+                        form.employee_id
+                          ? getEmployeeName(form.employee_id)
+                          : employeeSearch
+                      }
+                      placeholder="Search employee name..."
+                      onChange={(e) => {
+                        setEmployeeSearch(e.target.value);
 
-                    {employees.map(
-                      (employee) => (
-                        <option
-                          key={employee.id}
-                          value={employee.id}
-                        >
-                          {employee.name} (
-                          {
-                            employee.employeeCode
-                          }
-                          )
-                        </option>
-                      )
+                        setForm((current) => ({
+                          ...current,
+                          employee_id: "",
+                        }));
+
+                        setErrors((current) => ({
+                          ...current,
+                          employee_id: "",
+                        }));
+                      }}
+                    />
+
+                    {employeeSearch.trim() !== "" && !form.employee_id && (
+                      <div className={styles.employeeDropdown}>
+                        {filteredEmployees.length > 0 ? (
+                          filteredEmployees.slice(0, 10).map((employee) => (
+                            <div
+                              key={employee.id}
+                              className={styles.employeeOption}
+                              onMouseDown={(e) => {
+                                e.preventDefault();
+
+                                setForm((current) => ({
+                                  ...current,
+                                  employee_id: String(employee.id),
+                                }));
+
+                                setEmployeeSearch("");
+                              }}
+                            >
+                              <strong>
+                                {employee.first_name} {employee.last_name}
+                              </strong>
+
+                              <small>
+                                {employee.employee_code}
+                              </small>
+                            </div>
+                          ))
+                        ) : (
+                          <div className={styles.noEmployee}>
+                            No employee found
+                          </div>
+                        )}
+                      </div>
                     )}
-                  </select>
+                  </div>
 
                   {errors.employee_id && (
-                    <span
-                      className={
-                        styles.error
-                      }
-                    >
-                      {
-                        errors.employee_id
-                      }
+                    <span className={styles.error}>
+                      {errors.employee_id}
                     </span>
                   )}
                 </div>
 
                 {/* LEAVE TYPE */}
 
-                <div className={styles.field}>
+                <div
+                  className={
+                    styles.field
+                  }
+                >
+
                   <label htmlFor="leave_type_id">
                     Leave Type
                   </label>
@@ -633,25 +830,28 @@ const LeaveAllocations = () => {
                   <select
                     id="leave_type_id"
                     name="leave_type_id"
-                    value={
-                      form.leave_type_id
-                    }
+                    value={form.leave_type_id}
                     onChange={handleChange}
                   >
                     <option value="">
                       Select leave type
                     </option>
 
-                    {leaveTypes.map(
-                      (leaveType) => (
+                    {leaveTypes.map((type) => {
+                      const typeId =
+                        type.id ?? type.leave_type_id;
+
+                      return (
                         <option
-                          key={leaveType.id}
-                          value={leaveType.id}
+                          key={typeId}
+                          value={typeId}
                         >
-                          {leaveType.name}
+                          {type.leave_type_name ||
+                            type.name ||
+                            `Leave Type ${typeId}`}
                         </option>
-                      )
-                    )}
+                      );
+                    })}
                   </select>
 
                   {errors.leave_type_id && (
@@ -665,14 +865,71 @@ const LeaveAllocations = () => {
                       }
                     </span>
                   )}
+
                 </div>
 
-                {/* ALLOCATED LEAVES */}
+                {/* LEAVE PERIOD */}
 
-                <div className={styles.field}>
-                  <label
-                    htmlFor="total_leaves_allocated"
+                <div
+                  className={
+                    styles.field
+                  }
+                >
+
+                  <label htmlFor="leave_period_id">
+                    Leave Period
+                  </label>
+                  <select
+                    id="leave_period_id"
+                    name="leave_period_id"
+                    value={form.leave_period_id}
+                    onChange={handleChange}
                   >
+                    <option value="">
+                      Select leave period
+                    </option>
+
+                    {leavePeriods.map((period) => {
+                      const periodId =
+                        period.id ?? period.leave_period_id;
+
+                      return (
+                        <option
+                          key={periodId}
+                          value={periodId}
+                        >
+                          {period.period_name ||
+                            period.periodName ||
+                            period.name ||
+                            `Period ${periodId}`}
+                        </option>
+                      );
+                    })}
+                  </select>
+
+                  {errors.leave_period_id && (
+                    <span
+                      className={
+                        styles.error
+                      }
+                    >
+                      {
+                        errors.leave_period_id
+                      }
+                    </span>
+                  )}
+
+                </div>
+
+                {/* ALLOCATED */}
+
+                <div
+                  className={
+                    styles.field
+                  }
+                >
+
+                  <label htmlFor="total_leaves_allocated">
                     Allocated Leaves
                   </label>
 
@@ -685,7 +942,9 @@ const LeaveAllocations = () => {
                     value={
                       form.total_leaves_allocated
                     }
-                    onChange={handleChange}
+                    onChange={
+                      handleChange
+                    }
                   />
 
                   {errors.total_leaves_allocated && (
@@ -699,14 +958,18 @@ const LeaveAllocations = () => {
                       }
                     </span>
                   )}
+
                 </div>
 
                 {/* CARRY FORWARD */}
 
-                <div className={styles.field}>
-                  <label
-                    htmlFor="carry_forward_leaves"
-                  >
+                <div
+                  className={
+                    styles.field
+                  }
+                >
+
+                  <label htmlFor="carry_forward_leaves">
                     Carry Forward
                   </label>
 
@@ -719,7 +982,9 @@ const LeaveAllocations = () => {
                     value={
                       form.carry_forward_leaves
                     }
-                    onChange={handleChange}
+                    onChange={
+                      handleChange
+                    }
                   />
 
                   {errors.carry_forward_leaves && (
@@ -733,20 +998,24 @@ const LeaveAllocations = () => {
                       }
                     </span>
                   )}
+
                 </div>
+
               </div>
 
-              {/* ACTIONS */}
+              <div
+                className={
+                  styles.actions
+                }
+              >
 
-              <div className={styles.actions}>
                 <button
                   type="button"
                   className={
                     styles.secondaryButton
                   }
-                  onClick={() =>
-                    setIsFormOpen(false)
-                  }
+                  onClick={closeForm}
+                  disabled={saving}
                 >
                   Cancel
                 </button>
@@ -760,13 +1029,20 @@ const LeaveAllocations = () => {
                 >
                   {saving
                     ? "Saving..."
-                    : "Save Allocation"}
+                    : editingId
+                      ? "Update Allocation"
+                      : "Save Allocation"}
                 </button>
+
               </div>
+
             </form>
+
           </div>
+
         </div>
       )}
+
     </div>
   );
 };

@@ -1,11 +1,14 @@
 import React from "react";
-import { CalendarDays, CheckCircle2, Clock3, XCircle } from "lucide-react";
-
-import { leaveRequests } from "./leaveMockData";
+import {
+  CalendarDays,
+  CheckCircle2,
+  Clock3,
+  XCircle,
+} from "lucide-react";
 
 import styles from "./LeaveManagementChart.module.css";
 
-const LeaveManagementCard = () => {
+const LeaveManagementCard = ({ leaveRequests = [] }) => {
   const totalRequests = leaveRequests.length;
 
   const approved = leaveRequests.filter(
