@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 
+import { Settings, Plus } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
@@ -356,13 +357,13 @@ const LeaveManagement = () => {
   };
 
   const workingDays = calculateWorkingDays(
-  form.fromDate,
-  form.toDate
-);
+    form.fromDate,
+    form.toDate
+  );
 
-const numberOfDays = form.isHalfDay
-  ? Math.max(0, workingDays - 0.5)
-  : workingDays;
+  const numberOfDays = form.isHalfDay
+    ? Math.max(0, workingDays - 0.5)
+    : workingDays;
 
 
   /*
@@ -370,49 +371,48 @@ const numberOfDays = form.isHalfDay
    * OPEN APPLY LEAVE
    * ==========================================
    */
-const openApplyLeave = async () => {
-  if (isEmployeeView && !currentEmployee) {
-    setSubmitError("Employee information is not available.");
-    return;
-  }
+  const openApplyLeave = async () => {
+    if (isEmployeeView && !currentEmployee) {
+      setSubmitError("Employee information is not available.");
+      return;
+    }
 
-  setSubmitError("");
+    setSubmitError("");
 
-  // Refresh the latest leave balance from the backend
-  try {
-    const response = await leaveAllocationsApi.getAll();
+    // Refresh the latest leave balance from the backend
+    try {
+      const response = await leaveAllocationsApi.getAll();
 
-    const allocationData = Array.isArray(response)
-      ? response
-      : response?.data || [];
+      const allocationData = Array.isArray(response)
+        ? response
+        : response?.data || [];
 
-    setAllocations(allocationData);
-  } catch (error) {
-    console.error("Failed to refresh leave balance:", error);
-    setSubmitError("Unable to refresh leave balance.");
-  }
+      setAllocations(allocationData);
+    } catch (error) {
+      console.error("Failed to refresh leave balance:", error);
+      setSubmitError("Unable to refresh leave balance.");
+    }
 
-  if (isEmployeeView && currentEmployee) {
-    const employeeName = `${currentEmployee.first_name || ""} ${
-      currentEmployee.last_name || ""
-    }`;
+    if (isEmployeeView && currentEmployee) {
+      const employeeName = `${currentEmployee.first_name || ""} ${currentEmployee.last_name || ""
+        }`;
 
-    setForm({
-      ...initialForm,
-      employeeId: currentEmployee.id,
-    });
+      setForm({
+        ...initialForm,
+        employeeId: currentEmployee.id,
+      });
 
-    setEmployeeSearch(
-      `${employeeName} (${currentEmployee.employee_code || ""})`
-    );
-  } else {
-    setForm(initialForm);
-    setEmployeeSearch("");
-  }
+      setEmployeeSearch(
+        `${employeeName} (${currentEmployee.employee_code || ""})`
+      );
+    } else {
+      setForm(initialForm);
+      setEmployeeSearch("");
+    }
 
-  setErrors({});
-  setIsApplyOpen(true);
-};
+    setErrors({});
+    setIsApplyOpen(true);
+  };
 
   /*
    * ==========================================
@@ -632,7 +632,7 @@ const openApplyLeave = async () => {
     if (numberOfDays > currentBalance) {
       setSubmitError(
         "You don't have enough leave balance."
-      );    
+      );
       return;
     }
 
@@ -760,30 +760,22 @@ const openApplyLeave = async () => {
         >
           <button
             type="button"
-            className={
-              styles["settings-btn"]
-            }
-            onClick={() =>
-              navigate(
-                "/hr/leave-management/settings"
-              )
-            }
+            className={styles["settingsIconBtn"]}
+            onClick={() => navigate("/hr/leave-management/settings")}
+            title="Settings"
+            aria-label="Settings"
           >
-            Settings
+            <Settings size={20} />
           </button>
 
           <button
             type="button"
-            className={
-              styles[
-              "apply-leave-btn"
-              ]
-            }
-            onClick={
-              openApplyLeave
-            }
+            className={styles["settingsIconBtn"]}
+            onClick={openApplyLeave}
+            title="Apply Leave"
+            aria-label="Apply Leave"
           >
-            + Apply Leave
+            <Plus size={20} />
           </button>
         </div>
       </div>
@@ -1179,9 +1171,9 @@ const openApplyLeave = async () => {
 
                 {/* HALF DAY */}
 
-               <div
-  className={`${styles["leave-form-field"]} ${styles["half-day-field"]}`}
->
+                <div
+                  className={`${styles["leave-form-field"]} ${styles["half-day-field"]}`}
+                >
                   <label htmlFor="isHalfDay">
                     Half Day
                   </label>
