@@ -1,6 +1,7 @@
 .page {
   width: 100%;
   font-family: "Segoe UI", Arial, sans-serif;
+  color: #121212;
 }
 
 .header {
@@ -14,7 +15,7 @@
 .eyebrow {
   display: block;
   margin-bottom: 6px;
-  color: #995F2F;
+  color: #978F66;
   font-size: 11px;
   font-weight: 700;
   letter-spacing: 0.08em;
@@ -25,6 +26,7 @@
   font-size: 25px;
   color: #121212;
 }
+
 .header p {
   margin: 6px 0 0;
   color: #978F66;
@@ -38,6 +40,8 @@
   gap: 10px;
 }
 
+/* Buttons */
+
 .primaryButton,
 .secondaryButton,
 .dangerButton,
@@ -47,41 +51,70 @@
   font-size: 13px;
   font-weight: 600;
   cursor: pointer;
+  transition: 0.2s ease;
 }
 
 .primaryButton {
-  border: 1px solid #995F2F;
-  background: #995F2F;
-  color: #fff;
+  height: 40px;
+  padding: 0 14px;
+  border: none;
+  border-radius: 10px;
+  background: #f2b353;
+  color: #121212;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  box-shadow: 0 5px 14px rgba(153, 95, 47, 0.18);
 }
+
 .primaryButton:hover {
-  background: #622B14;
+  background: #121212;
+  color: #f2b353;
 }
+
 .secondaryButton {
   border: 1px solid #E4D6A9;
   background: #fff;
-  color: #121212;
+  color: #995F2F;
   text-decoration: none;
 }
+
 .secondaryButton:hover {
-  background: #FFFAF0;
+  background: #F5EADB;
+  border-color: #995F2F;
+  color: #995F2F;
 }
+
 .dangerButton {
   border: 1px solid #fecaca;
   background: #fff;
   color: #dc2626;
 }
+
 .dangerButton:hover {
   background: #fef2f2;
 }
+
 .viewButton {
+  min-width: 62px;
+  height: 34px;
+  padding: 0 14px;
   border: 1px solid #E4D6A9;
+  border-radius: 8px;
   background: #fff;
-  color: #121212;
+  color: #995F2F;
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 600;
 }
+
 .viewButton:hover {
-  background: #FFFAF0;
+  background: #995F2F;
+  color: #fff;
+  border-color: #995F2F;
 }
+
+/* Cards */
 
 .card {
   overflow: hidden;
@@ -89,17 +122,20 @@
   border-radius: 12px;
   background: #fff;
 }
+
 .cardHeader {
   display: flex;
   justify-content: space-between;
   gap: 20px;
   padding: 20px 22px;
-  border-bottom: 1px solid #E8DED4;
+  border-bottom: 1px solid #F0E7D8;
 }
+
 .cardHeader h2 {
   margin: 0;
   font-size: 17px;
 }
+
 .cardHeader p {
   margin: 5px 0 0;
   color: #978F66;
@@ -114,14 +150,19 @@
   font-size: 12px;
   font-weight: 600;
 }
+
+/* Table */
+
 .tableWrapper {
   overflow-x: auto;
 }
+
 .table {
   width: 100%;
   min-width: 900px;
   border-collapse: collapse;
 }
+
 .table th {
   padding: 13px 20px;
   background: #FFFAF0;
@@ -130,15 +171,18 @@
   text-align: left;
   white-space: nowrap;
 }
+
 .table td {
   padding: 15px 20px;
   border-top: 1px solid #F0E7D8;
   color: #121212;
   font-size: 13px;
 }
+
 .table tbody tr:hover {
-  background: #fafafa;
+  background: #FFFAF0;
 }
+
 .actionCell {
   text-align: right;
 }
@@ -147,23 +191,30 @@
   color: #15803d;
   font-weight: 600;
 }
+
 .no {
   color: #978F66;
 }
+
+/* Empty state */
 
 .emptyState {
   padding: 50px 20px;
   text-align: center;
 }
+
 .emptyState strong {
   color: #121212;
   font-size: 15px;
 }
+
 .emptyState p {
   margin: 7px 0 18px;
   color: #978F66;
   font-size: 13px;
 }
+
+/* Modal */
 
 .modalOverlay {
   position: fixed;
@@ -193,15 +244,18 @@
   padding: 22px 24px;
   border-bottom: 1px solid #E8DED4;
 }
+
 .modalHeader h2 {
   margin: 0;
   font-size: 18px;
 }
+
 .modalHeader p {
   margin: 5px 0 0;
   color: #978F66;
   font-size: 13px;
 }
+
 .closeButton {
   border: 0;
   background: transparent;
@@ -210,8 +264,9 @@
   line-height: 1;
   cursor: pointer;
 }
+
 .closeButton:hover {
-  color: #121212;
+  color: #995F2F;
 }
 
 .detailsGrid {
@@ -220,6 +275,7 @@
   gap: 12px;
   padding: 22px 24px;
 }
+
 .detailsGrid div {
   display: flex;
   flex-direction: column;
@@ -228,10 +284,12 @@
   border: 1px solid #E8DED4;
   border-radius: 8px;
 }
+
 .detailsGrid span {
   color: #978F66;
   font-size: 12px;
 }
+
 .detailsGrid strong {
   color: #121212;
   font-size: 14px;
@@ -240,22 +298,27 @@
 .modal form {
   padding: 22px 24px 0;
 }
+
 .formGrid {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 18px;
 }
+
 .field {
   display: flex;
   flex-direction: column;
   gap: 7px;
 }
+
 .field label {
   color: #121212;
   font-size: 13px;
   font-weight: 600;
 }
-.field input {
+
+.field input,
+.field select {
   width: 100%;
   box-sizing: border-box;
   padding: 10px 11px;
@@ -265,18 +328,25 @@
   font-size: 13px;
   outline: none;
 }
-.field input:focus {
+
+.field input:focus,
+.field select:focus {
   border-color: #995F2F;
-  box-shadow: 0 0 0 3px rgba(153,95,47,0.1);
+  box-shadow: 0 0 0 3px rgba(153, 95, 47, 0.1);
 }
+
 .field input:disabled {
   background: #F5EADB;
   color: #978F66;
 }
+
 .error {
   color: #dc2626;
   font-size: 11px;
 }
+
+/* Checkboxes */
+
 .checkboxGroup {
   display: flex;
   flex-wrap: wrap;
@@ -284,6 +354,7 @@
   grid-column: 1 / -1;
   padding-top: 2px;
 }
+
 .checkboxLabel {
   display: inline-flex;
   align-items: center;
@@ -292,6 +363,7 @@
   font-size: 13px;
   cursor: pointer;
 }
+
 .checkboxLabel input {
   width: 15px;
   height: 15px;
@@ -299,14 +371,153 @@
   accent-color: #995F2F;
 }
 
+.formActions,
+.actions {
+  border-top: 1px solid #F0E7D8;
+}
+
 .formActions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
   padding: 18px 24px 22px;
-  border-top: 1px solid #E8DED4;
   margin-top: 22px;
 }
+
 .actionSpacer {
   flex: 1;
 }
+
+/* Navigation and Add Leave Type buttons */
+.navigationButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 0;
+
+  width: 40px;
+  min-width: 40px;
+  height: 38px;
+  padding: 0 11px;
+
+  overflow: hidden;
+  box-sizing: border-box;
+
+  border: 1px solid #E4D6A9;
+  border-radius: 8px;
+
+  background: #995f2f;
+  color: #f2b353;
+
+  text-decoration: none;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  white-space: nowrap;
+  cursor: pointer;
+
+  transition:
+    width 0.25s ease,
+    gap 0.25s ease,
+    background-color 0.2s ease,
+    border-color 0.2s ease,
+    color 0.2s ease;
+}
+
+.navigationButton svg {
+  flex-shrink: 0;
+}
+
+.navigationButton span {
+  display: inline-block;
+  max-width: 0;
+  overflow: hidden;
+  opacity: 0;
+
+  transition:
+    max-width 0.25s ease,
+    opacity 0.2s ease;
+}
+
+/* Expand on hover */
+.navigationButton:hover {
+  width: 160px;
+  gap: 7px;
+
+  background: #f2b353;
+  border-color: #f2b353;
+  color: #995F2F;
+}
+
+/* Show text on hover */
+.navigationButton:hover span {
+  max-width: 110px;
+  opacity: 1;
+}
+
+/* Keyboard accessibility */
+.navigationButton:focus-visible {
+  outline: 2px solid #f2b353;
+  outline-offset: 3px;
+}
+
+.navigationButton:focus-visible span {
+  max-width: 110px;
+  opacity: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .navigationButton,
+  .navigationButton span {
+    transition: none;
+  }
+}
+
+/* Settings icon button */
+
+.settingsButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 38px;
+  width: 38px;
+  height: 36px;
+  padding: 0;
+  overflow: hidden;
+  box-sizing: border-box;
+  border: 1px solid #E4D6A9;
+  border-radius: 8px;
+  background: #fff;
+  color: #995F2F;
+  text-decoration: none;
+  cursor: pointer;
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease,
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.settingsButton svg {
+  flex-shrink: 0;
+}
+
+.settingsButton:hover {
+  background: #FFFAF0;
+  color: #995F2F;
+  border-color: #995F2F;
+}
+
+.settingsButton:focus-visible {
+  outline: 2px solid #995F2F;
+  outline-offset: 3px;
+}
+
+.settingsButton:active {
+  background: #F5EADB;
+}
+
+/* Responsive */
 
 @media (max-width: 768px) {
   .header,
@@ -314,201 +525,35 @@
     flex-direction: column;
     align-items: flex-start;
   }
+
   .headerActions {
     width: 100%;
   }
+
   .headerActions > * {
     flex: 1;
     text-align: center;
     justify-content: center;
   }
+
   .formGrid,
   .detailsGrid {
     grid-template-columns: 1fr;
   }
+
   .checkboxGroup {
     grid-column: auto;
     flex-direction: column;
   }
 }
 
-
-/* ================= EMPLOYEE MANAGEMENT VISUAL TOKENS ================= */
-
-.page {
-  color: #121212;
-}
-
-.eyebrow {
-  color: #978F66;
-}
-
-.header h1 {
-  color: #121212;
-}
-
-.header p,
-.cardHeader p,
-.emptyState p,
-.modalHeader p {
-  color: #978F66;
-}
-
-.primaryButton {
-  height: 40px;
-  padding: 0 14px;
-  border: none;
-  border-radius: 10px;
-  background: #f2b353;
-  color: #121212;
-  font-family: "Segoe UI", Arial, sans-serif;
-  font-size: 14px;
-  font-weight: 600;
-  box-shadow: 0 5px 14px rgba(153, 95, 47, 0.18);
-  transition: 0.2s ease;
-}
-
-.primaryButton:hover {
-  background: #121212;
-  color: #f2b353;
-}
-
-.viewButton {
-  min-width: 62px;
-  height: 34px;
-  padding: 0 14px;
-  border: 1px solid #E4D6A9;
-  border-radius: 8px;
-  background: #ffffff;
-  color: #995F2F;
-  font-family: inherit;
-  font-size: 12px;
-  font-weight: 600;
-  transition: 0.2s ease;
-}
-
-.viewButton:hover {
-  background: #995F2F;
-  color: #ffffff;
-  border-color: #995F2F;
-}
-
-.secondaryButton {
-  border-color: #E4D6A9;
-  color: #995F2F;
-}
-
-.secondaryButton:hover {
-  background: #F5EADB;
-  border-color: #995F2F;
-  color: #995F2F;
-}
-
-.card,
-.intro {
-  border-color: #E8DED4;
-}
-
-.cardHeader {
-  border-bottom-color: #F0E7D8;
-}
-
-.table th {
-  background: #FFFAF0;
-  color: #978F66;
-}
-
-.table td {
-  border-top-color: #F0E7D8;
-  color: #121212;
-}
-
-.table tbody tr:hover {
-  background: #FFFAF0;
-}
-
-.count {
-  background: #F5EADB;
-  color: #995F2F;
-}
-
-.field input:focus,
-.field select:focus {
-  border-color: #995F2F;
-  box-shadow: 0 0 0 3px rgba(153, 95, 47, 0.1);
-}
-
-.checkboxLabel input {
-  accent-color: #995F2F;
-}
-
-.closeButton {
-  color: #978F66;
-}
-
-.closeButton:hover {
-  color: #995F2F;
-}
-
-.formActions,
-.actions {
-  border-top-color: #F0E7D8;
-}
-
-/* ================= NAVIGATION BUTTON ================= */
-
-.navigationButton {
-  display: inline-flex;
-  align-items: center;
-  justify-content: flex-start;
-  gap: 0;
-  width: 40px;
-  min-width: 40px;
-  height: 38px;
-  padding: 0 11px;
-  overflow: hidden;
-  border: 1px solid #E4D6A9;
-  border-radius: 8px;
-  background: #ffffff;
-  color: #995F2F;
-  text-decoration: none;
-  font-family: "Segoe UI", Arial, sans-serif;
-  font-size: 13px;
-  font-weight: 600;
-  white-space: nowrap;
-  cursor: pointer;
-  transition: width 0.18s ease, gap 0.18s ease, background 0.18s ease, border-color 0.18s ease, color 0.18s ease;
-}
-
-.navigationButton svg {
-  flex: 0 0 auto;
-}
-
-.navigationButton span {
-  width: 0;
-  max-width: 0;
-  margin: 0;
-  overflow: hidden;
-  opacity: 0;
-  transition: width 0.18s ease, max-width 0.18s ease, opacity 0.15s ease;
-}
-
-.navigationButton:hover {
-  width: 190px;
-  gap: 7px;
-  background: #995F2F;
-  border-color: #995F2F;
-  color: #ffffff;
-}
-
-.navigationButton:hover span {
-  width: auto;
-  max-width: 220px;
-  opacity: 1;
-}
-
-.navigationButton:focus-visible {
-  outline: none;
-  border-color: #995F2F;
-  box-shadow: 0 0 0 3px rgba(153, 95, 47, 0.12);
+@media (prefers-reduced-motion: reduce) {
+  .navigationButton,
+  .navigationButton span,
+  .settingsButton,
+  .primaryButton,
+  .secondaryButton,
+  .viewButton {
+    transition: none;
+  }
 }

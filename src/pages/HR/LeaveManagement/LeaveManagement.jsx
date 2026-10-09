@@ -753,11 +753,8 @@ const LeaveManagement = () => {
           </h1>
         </div>
 
-        <div
-          className={
-            styles["leave-page-actions"]
-          }
-        >
+        <div className={styles["leave-page-actions"]}>
+          {/* Settings Button */}
           <button
             type="button"
             className={styles["settingsIconBtn"]}
@@ -766,16 +763,19 @@ const LeaveManagement = () => {
             aria-label="Settings"
           >
             <Settings size={20} />
+            <span>Settings</span>
           </button>
 
+          {/* Apply Leave Button */}
           <button
             type="button"
-            className={styles["settingsIconBtn"]}
+            className={`${styles["settingsIconBtn"]} ${styles["applyLeaveBtn"]}`}
             onClick={openApplyLeave}
             title="Apply Leave"
             aria-label="Apply Leave"
           >
             <Plus size={20} />
+            <span>Apply Leave</span>
           </button>
         </div>
       </div>

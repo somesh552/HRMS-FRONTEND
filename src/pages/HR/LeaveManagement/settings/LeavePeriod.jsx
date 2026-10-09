@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { Settings } from "lucide-react";
+import { Settings,Plus } from "lucide-react";
 
 import { leavePeriodsApi } from "../../../../services/api/leavePeriods.api";
 
@@ -234,12 +234,15 @@ const LeavePeriod = () => {
           </Link>
 
           <button
-            type="button"
-            className={styles.primaryButton}
-            onClick={openAdd}
-          >
-            + Add Leave Period
-          </button>
+  type="button"
+  className={styles.navigationButton}
+  onClick={openAdd}
+  title="Add Leave Period"
+  aria-label="Add Leave Period"
+>
+  <Plus size={18} strokeWidth={2} />
+  <span>Add Leave Period</span>
+</button>
         </div>
       </div>
 

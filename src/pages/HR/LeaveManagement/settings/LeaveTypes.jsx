@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { Settings } from "lucide-react";
+import { Settings, Plus } from "lucide-react";
 
 import { leaveTypesApi } from "../../../../services/api/leaveTypes.api";
 
@@ -231,10 +231,13 @@ const LeaveTypes = () => {
 
           <button
             type="button"
-            className={styles.primaryButton}
+            className={styles.navigationButton}
             onClick={openAdd}
+            title="Add Leave Type"
+            aria-label="Add Leave Type"
           >
-            + Add Leave Type
+            <Plus size={18} strokeWidth={2} />
+            <span>Add Leave Type</span>
           </button>
         </div>
       </div>
@@ -344,7 +347,7 @@ const LeaveTypes = () => {
               className={styles.primaryButton}
               onClick={openAdd}
             >
-             + Add Leave Type
+              + Add Leave Type
             </button>
           </div>
         )}

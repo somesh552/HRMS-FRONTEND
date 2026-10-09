@@ -332,25 +332,82 @@
   border-color: #121212;
   color: #f2b353;
 }
+
+
+/* Header action buttons */
+/* Header actions */
 .leave-page-actions {
   display: flex;
   align-items: center;
   gap: 10px;
 }
 
-.settings-btn {
-  border: 1px solid #d1d5db;
-  border-radius: 8px;
-  padding: 11px 18px;
-  background: #ffffff;
-  color: #374151;
-  font-size: 14px;
-  font-weight: 600;
+/* Default: Show only icons */
+.settingsIconBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 0;
+  width: 42px;
+  min-width: 42px;
+  height: 40px;
+  padding: 0 10px;
+  overflow: hidden;
+  box-sizing: border-box;
+  border: 1px solid #E4D6A9;
+  border-radius: 9px;
+  background: #995f2f;;
+  color: #f2b353;
   cursor: pointer;
+  white-space: nowrap;
+  transition: width 0.25s ease, gap 0.25s ease, background-color 0.2s ease;
 }
 
-.settings-btn:hover {
-  background: #f9fafb;
+.settingsIconBtn svg {
+  flex-shrink: 0;
+}
+
+/* Hide text initially */
+.settingsIconBtn span {
+  display: inline-block;
+  max-width: 0;
+  overflow: hidden;
+  opacity: 0;
+  transition: max-width 0.25s ease, opacity 0.2s ease;
+}
+
+/* Settings hover */
+.settingsIconBtn:hover {
+  width: 125px;
+  gap: 8px;
+  background: #f2b353;
+  border-color: #995F2F;
+  color: #995F2F;
+}
+
+.settingsIconBtn:hover span {
+  max-width: 75px;
+  opacity: 1;
+}
+
+/* Apply Leave hover */
+.applyLeaveBtn:hover {
+  width: 160px;
+  gap: 8px;
+  background: #F2b353;
+  border-color: #995F2F;
+  color: #995F2F;
+}
+
+.applyLeaveBtn:hover span {
+  max-width: 110px;
+  opacity: 1;
+}
+
+/* Keyboard accessibility */
+.settingsIconBtn:focus-visible {
+  outline: 2px solid #995F2F;
+  outline-offset: 3px;
 }
 .half-day-field {
   display: flex;
@@ -366,34 +423,24 @@
 .half-day-field .toggle-switch {
   margin: 0;
 }
-.settingsIconBtn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 38px;
-  height: 38px;
-  padding: 0;
-  background: #fff;
-  color: #b87319;
-  border: 1px solid #ead6b2;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: background 0.2s ease, border-color 0.2s ease;
-}
 
 /* Hover effect */
 .settingsIconBtn:hover {
-  background: #fff3dc;
+  background: #f2b353;
   border-color: #d99a36;
+  color:#ffffff
 }
 
 /* Click effect */
 .settingsIconBtn:active {
-  background: #ffe8bd;
+  background: #f2b353;
 }
 
 /* Keyboard accessibility */
 .settingsIconBtn:focus-visible {
+  background: #f2b353;
+  border-color: #d99a36;
+  color:#ffffff;
   outline: 2px solid #d99a36;
   outline-offset: 2px;
 }

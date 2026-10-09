@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
-import { Settings } from "lucide-react";
+import { Settings, Plus } from "lucide-react";
 
 import { holidayListsApi } from "../../../../services/api/holidayLists.api";
 
@@ -71,7 +71,7 @@ const HolidayList = () => {
 
       alert(
         error.response?.data?.message ||
-          "Failed to load holiday lists"
+        "Failed to load holiday lists"
       );
     } finally {
       setLoadingLists(false);
@@ -111,7 +111,7 @@ const HolidayList = () => {
 
       alert(
         error.response?.data?.message ||
-          "Failed to load holidays"
+        "Failed to load holidays"
       );
     } finally {
       setLoadingHolidays(false);
@@ -225,7 +225,7 @@ const HolidayList = () => {
 
       alert(
         error.response?.data?.message ||
-          "Failed to save holiday"
+        "Failed to save holiday"
       );
     } finally {
       setSaving(false);
@@ -263,7 +263,7 @@ const HolidayList = () => {
 
       alert(
         error.response?.data?.message ||
-          "Failed to delete holiday"
+        "Failed to delete holiday"
       );
     }
   };
@@ -349,11 +349,14 @@ const HolidayList = () => {
 
           <button
             type="button"
-            className={styles.primaryButton}
+            className={styles.navigationButton}
             onClick={openAdd}
             disabled={!selectedListId}
+            title="Add Holiday"
+            aria-label="Add Holiday"
           >
-            + Add Holiday
+            <Plus size={18} strokeWidth={2} />
+            <span>Add Holiday</span>
           </button>
         </div>
       </div>
