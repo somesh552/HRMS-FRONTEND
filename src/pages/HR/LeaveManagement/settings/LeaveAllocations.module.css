@@ -374,53 +374,60 @@
   width: 100%;
 }
 
-.employeeSearchWrapper input {
-  width: 100%;
-  box-sizing: border-box;
-}
-
 .employeeDropdown {
   position: absolute;
-  top: calc(100% + 4px);
+  top: calc(100% + 5px);
   left: 0;
   right: 0;
-  z-index: 100;
-  background: #fff;
-  border: 1px solid #d9d9d9;
-  border-radius: 7px;
-  max-height: 220px;
+  max-height: 240px;
   overflow-y: auto;
-  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12);
+  z-index: 1000;
+}
+
+.employeeDropdownSearch {
+  position: sticky;
+  top: 0;
+  width: 100%;
+  padding: 11px 12px;
+  border: none;
+  border-bottom: 1px solid #eee;
+  background: #fff;
+  box-sizing: border-box;
+  outline: none;
 }
 
 .employeeOption {
-  padding: 10px 12px;
-  cursor: pointer;
   display: flex;
   flex-direction: column;
-  gap: 3px;
+  gap: 4px;
+  padding: 11px 12px;
+  cursor: pointer;
 }
 
 .employeeOption:hover {
-  background: #f7f7f7;
+  background: #fff5e5;
 }
 
 .employeeOption strong {
-  color: #172033;
   font-size: 14px;
+  color: #222;
 }
 
 .employeeOption small {
-  color: #888;
   font-size: 12px;
+  color: #777;
 }
 
 .noEmployee {
-  padding: 12px;
+  padding: 14px;
+  text-align: center;
   color: #777;
   font-size: 13px;
 }
-
 /* =========================
    RESPONSIVE
 ========================= */

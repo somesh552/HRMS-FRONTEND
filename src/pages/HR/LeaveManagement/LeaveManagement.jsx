@@ -289,31 +289,28 @@ const LeaveManagement = () => {
    * ==========================================
    */
 
+  // Find the employee's shared leave allocation
   const selectedAllocation =
     allocations.find(
       (allocation) =>
-        String(
-          allocation.employee_id
-        ) === String(form.employeeId) &&
-        String(
-          allocation.leave_type_id
-        ) === String(form.leaveType)
+        Number(allocation.employee_id) ===
+        Number(form.employeeId) &&
+        allocation.remaining_leaves !== null &&
+        allocation.remaining_leaves !== undefined
     ) || null;
-
   /*
    * ==========================================
    * CURRENT BALANCE
    * ==========================================
    */
 
-  const currentBalance =
-    selectedAllocation
-      ? Number(
-        selectedAllocation.remaining_leaves ??
-        selectedAllocation.remainingLeaves ??
-        0
-      )
-      : 0;
+  const currentBalance = selectedAllocation
+    ? Number(
+      selectedAllocation.remaining_leaves ??
+      selectedAllocation.remainingLeaves ??
+      0
+    )
+    : 0;
 
   /*
    * ==========================================
@@ -325,8 +322,17 @@ const LeaveManagement = () => {
       return 0;
     }
 
-    const start = new Date(fromDate);
-    const end = new Date(toDate);
+    // Parse YYYY-MM-DD as local dates to avoid timezone issues
+    const [startYear, startMonth, startDay] = fromDate
+      .split("-")
+      .map(Number);
+
+    const [endYear, endMonth, endDay] = toDate
+      .split("-")
+      .map(Number);
+
+    const start = new Date(startYear, startMonth - 1, startDay);
+    const end = new Date(endYear, endMonth - 1, endDay);
 
     if (start > end) {
       return 0;
@@ -338,8 +344,7 @@ const LeaveManagement = () => {
     while (current <= end) {
       const day = current.getDay();
 
-      // Sunday = 0
-      // Saturday = 6
+      // Exclude Saturday and Sunday
       if (day !== 0 && day !== 6) {
         days++;
       }
@@ -350,10 +355,14 @@ const LeaveManagement = () => {
     return days;
   };
 
-  const numberOfDays = calculateWorkingDays(
-    form.fromDate,
-    form.toDate
-  );
+  const workingDays = calculateWorkingDays(
+  form.fromDate,
+  form.toDate
+);
+
+const numberOfDays = form.isHalfDay
+  ? Math.max(0, workingDays - 0.5)
+  : workingDays;
 
 
   /*
@@ -361,26 +370,49 @@ const LeaveManagement = () => {
    * OPEN APPLY LEAVE
    * ==========================================
    */
+const openApplyLeave = async () => {
+  if (isEmployeeView && !currentEmployee) {
+    setSubmitError("Employee information is not available.");
+    return;
+  }
 
-  const openApplyLeave = () => {
-    if (
-      isEmployeeView &&
-      !currentEmployee
-    ) {
-      setSubmitError(
-        "Employee information is not available."
-      );
+  setSubmitError("");
 
-      return;
-    }
+  // Refresh the latest leave balance from the backend
+  try {
+    const response = await leaveAllocationsApi.getAll();
+
+    const allocationData = Array.isArray(response)
+      ? response
+      : response?.data || [];
+
+    setAllocations(allocationData);
+  } catch (error) {
+    console.error("Failed to refresh leave balance:", error);
+    setSubmitError("Unable to refresh leave balance.");
+  }
+
+  if (isEmployeeView && currentEmployee) {
+    const employeeName = `${currentEmployee.first_name || ""} ${
+      currentEmployee.last_name || ""
+    }`;
+
+    setForm({
+      ...initialForm,
+      employeeId: currentEmployee.id,
+    });
+
+    setEmployeeSearch(
+      `${employeeName} (${currentEmployee.employee_code || ""})`
+    );
+  } else {
     setForm(initialForm);
     setEmployeeSearch("");
+  }
 
-    setErrors({});
-    setSubmitError("");
-
-    setIsApplyOpen(true);
-  };
+  setErrors({});
+  setIsApplyOpen(true);
+};
 
   /*
    * ==========================================
@@ -584,7 +616,7 @@ const LeaveManagement = () => {
     // Make sure allocation exists
     if (!selectedAllocation) {
       setSubmitError(
-        "Leave allocation not found for this employee and leave type."
+        "Shared leave allocation not found for this employee."
       );
       return;
     }
@@ -600,7 +632,7 @@ const LeaveManagement = () => {
     if (numberOfDays > currentBalance) {
       setSubmitError(
         "You don't have enough leave balance."
-      );
+      );    
       return;
     }
 
@@ -918,7 +950,11 @@ const LeaveManagement = () => {
                           ? "Loading employees..."
                           : "Search employee name..."
                       }
-                      disabled={isSubmitting || employeeLoading}
+                      disabled={
+                        isSubmitting ||
+                        employeeLoading ||
+                        isEmployeeView
+                      }
                       onChange={(e) => {
                         const value = e.target.value;
 
@@ -939,7 +975,7 @@ const LeaveManagement = () => {
                       }}
                     />
 
-                    {showEmployeeResults && (
+                    {showEmployeeResults && !isEmployeeView && (
                       <div className={styles["employee-search-results"]}>
                         {filteredEmployees.length > 0 ? (
                           filteredEmployees.slice(0, 10).map((employee) => (
@@ -1143,11 +1179,9 @@ const LeaveManagement = () => {
 
                 {/* HALF DAY */}
 
-                <div
-                  className={
-                    styles["leave-form-field"]
-                  }
-                >
+               <div
+  className={`${styles["leave-form-field"]} ${styles["half-day-field"]}`}
+>
                   <label htmlFor="isHalfDay">
                     Half Day
                   </label>

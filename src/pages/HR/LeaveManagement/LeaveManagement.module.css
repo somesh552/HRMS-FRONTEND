@@ -352,6 +352,20 @@
 .settings-btn:hover {
   background: #f9fafb;
 }
+.half-day-field {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 12px;
+}
+
+.half-day-field > label:first-child {
+  margin: 0;
+}
+
+.half-day-field .toggle-switch {
+  margin: 0;
+}
 .employee-search-wrapper {
   position: relative;
   width: 100%;

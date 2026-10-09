@@ -30,7 +30,7 @@ const LeaveAllocations = () => {
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [employeeSearch, setEmployeeSearch] = useState("");
-
+  const [showEmployeeDropdown, setShowEmployeeDropdown] = useState(false);
   // ==========================================
   // LOAD DATA
   // ==========================================
@@ -742,10 +742,9 @@ const LeaveAllocations = () => {
 
                 {/* EMPLOYEE */}
 
+                {/* EMPLOYEE */}
                 <div className={styles.field}>
-                  <label htmlFor="employeeSearch">
-                    Employee
-                  </label>
+                  <label htmlFor="employeeSearch">Employee</label>
 
                   <div className={styles.employeeSearchWrapper}>
                     <input
@@ -757,6 +756,11 @@ const LeaveAllocations = () => {
                           : employeeSearch
                       }
                       placeholder="Search employee name..."
+                      autoComplete="off"
+                      onFocus={() => {
+                        setEmployeeSearch("");
+                        setShowEmployeeDropdown(true);
+                      }}
                       onChange={(e) => {
                         setEmployeeSearch(e.target.value);
 
@@ -769,13 +773,27 @@ const LeaveAllocations = () => {
                           ...current,
                           employee_id: "",
                         }));
+
+                        setShowEmployeeDropdown(true);
                       }}
                     />
 
-                    {employeeSearch.trim() !== "" && !form.employee_id && (
+                    {showEmployeeDropdown && !form.employee_id && (
                       <div className={styles.employeeDropdown}>
+                        <input
+                          type="text"
+                          className={styles.employeeDropdownSearch}
+                          placeholder="Search employees..."
+                          value={employeeSearch}
+                          autoComplete="off"
+                          onChange={(e) => {
+                            setEmployeeSearch(e.target.value);
+                          }}
+                          onMouseDown={(e) => e.stopPropagation()}
+                        />
+
                         {filteredEmployees.length > 0 ? (
-                          filteredEmployees.slice(0, 10).map((employee) => (
+                          filteredEmployees.map((employee) => (
                             <div
                               key={employee.id}
                               className={styles.employeeOption}
@@ -788,15 +806,19 @@ const LeaveAllocations = () => {
                                 }));
 
                                 setEmployeeSearch("");
+                                setShowEmployeeDropdown(false);
+
+                                setErrors((current) => ({
+                                  ...current,
+                                  employee_id: "",
+                                }));
                               }}
                             >
                               <strong>
                                 {employee.first_name} {employee.last_name}
                               </strong>
 
-                              <small>
-                                {employee.employee_code}
-                              </small>
+                              <small>{employee.employee_code}</small>
                             </div>
                           ))
                         ) : (
@@ -814,7 +836,6 @@ const LeaveAllocations = () => {
                     </span>
                   )}
                 </div>
-
                 {/* LEAVE TYPE */}
 
                 <div

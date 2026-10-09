@@ -344,7 +344,7 @@ const LeaveTypes = () => {
               className={styles.primaryButton}
               onClick={openAdd}
             >
-              Add Leave Type
+             + Add Leave Type
             </button>
           </div>
         )}
