@@ -354,9 +354,9 @@ const EmployeeOnboarding = () => {
             "",
 
           // currentAddress:
-            // currentAddress?.address ??
-            // currentAddress?.full_address ??
-            // "",
+          // currentAddress?.address ??
+          // currentAddress?.full_address ??
+          // "",
 
           sameAsPermanent:
             Boolean(
@@ -572,7 +572,6 @@ const EmployeeOnboarding = () => {
   // ==========================================
   // EMPLOYEE SUBMISSION
   // ==========================================
-
   const submitEmployee = async () => {
     try {
       setIsSubmitting(true);
@@ -587,32 +586,32 @@ const EmployeeOnboarding = () => {
 
       formDataToSend.append(
         "employeeData",
-        JSON.stringify(employeeData),
+        JSON.stringify(employeeData)
       );
 
       formDataToSend.append(
         "personalInfo",
-        JSON.stringify(personalInfo),
+        JSON.stringify(personalInfo)
       );
 
       formDataToSend.append(
         "addresses",
-        JSON.stringify(addresses),
+        JSON.stringify(addresses)
       );
 
       formDataToSend.append(
         "documentsMetadata",
-        JSON.stringify(documentsMetadata),
+        JSON.stringify(documentsMetadata)
       );
 
       appendDocumentFiles(formDataToSend);
 
-      // Validate required documents before sending the request.
-      const uploadedDocumentKeys = formData.documents.map(
-        (document) => document.documentKey,
-      );
-
+      // Validate required documents only during new registration.
       if (!isEditMode) {
+        const uploadedDocumentKeys = formData.documents.map(
+          (document) => document.documentKey
+        );
+
         const requiredDocumentKeys = [
           "PROFILE_PHOTO",
           "AADHAAR",
@@ -623,37 +622,47 @@ const EmployeeOnboarding = () => {
         ];
 
         const missingDocument = requiredDocumentKeys.find(
-          (key) => !uploadedDocumentKeys.includes(key),
+          (key) => !uploadedDocumentKeys.includes(key)
         );
 
         if (missingDocument) {
           throw new Error(`${missingDocument} document is required`);
         }
 
-        const hasIntermediate = uploadedDocumentKeys.includes("INTERMEDIATE");
-        const hasDiploma = uploadedDocumentKeys.includes("DIPLOMA");
+        const hasIntermediate =
+          uploadedDocumentKeys.includes("INTERMEDIATE");
+
+        const hasDiploma =
+          uploadedDocumentKeys.includes("DIPLOMA");
 
         if (!hasIntermediate && !hasDiploma) {
           throw new Error(
-            "Either Intermediate or Diploma certificate is required",
+            "Either Intermediate or Diploma certificate is required"
           );
         }
 
         if (hasIntermediate && hasDiploma) {
           throw new Error(
-            "Upload either Intermediate or Diploma certificate, not both",
+            "Upload either Intermediate or Diploma certificate, not both"
           );
         }
       }
+
       let response;
 
       if (isEditMode) {
-
+        // Update existing employee.
         response = await employeeApi.update(id, formDataToSend);
-      } else {
 
-        response = await employeeApi.create(formDataToSend);
+        console.log("Employee updated successfully:", response.data);
+
+        // Navigate to Employee Overview after a successful update.
+        navigate(`/hr/employees/${id}`, { replace: true });
+        return;
       }
+
+      // Create a new employee.
+      response = await employeeApi.create(formDataToSend);
 
       const employeeCode =
         response.data?.employeeCode ||
@@ -661,30 +670,28 @@ const EmployeeOnboarding = () => {
         response.data?.employee?.employeeCode ||
         "";
 
-      if (isEditMode) {
-        navigate(`/hr/employees/${id}`);
-        return;
-      }
-
       setCreatedEmployeeCode(employeeCode);
       setRegistrationSuccess(true);
 
     } catch (error) {
-      console.error("Employee registration failed:", error);
-      console.error("Status:", error.response?.status);
-      console.error("Backend response:", error.response?.data);
-      console.error("Backend message:", error.response?.data?.message);
+      console.error("Employee submission failed:", error);
+      console.error("HTTP status:", error.response?.status);
+      console.error("Backend error:", error.response?.data);
+
+      const backendMessage = error.response?.data?.message;
 
       setSubmitError(
-        error.response?.data?.message ||
-        error.message ||
-        "Employee registration failed. Please try again.",
+        Array.isArray(backendMessage)
+          ? backendMessage.join(", ")
+          : backendMessage ||
+          error.message ||
+          "Employee submission failed. Please try again."
       );
     } finally {
       setIsSubmitting(false);
     }
-
   };
+
   // ==========================================
   // VALIDATION
   // ==========================================
@@ -1041,7 +1048,7 @@ const EmployeeOnboarding = () => {
       const isValid = validateStep(4);
 
       if (!isValid) {
-                return;
+        return;
       }
 
       try {
@@ -1057,7 +1064,7 @@ const EmployeeOnboarding = () => {
     const isValid = validateStep(currentStep);
 
     if (!isValid) {
-            return;
+      return;
     }
 
     setCompletedSteps((prev) => {
@@ -1386,11 +1393,11 @@ const EmployeeRegistration = ({
             !formData.department || !formData.designation
               ? "Select Department and Designation First"
               : (managers || []).some((manager) =>
-                  String(manager.department_id ?? manager.departmentId) === String(formData.department) &&
-                  String(manager.designation_id ?? manager.designationId) === String(formData.designation) &&
-                  String(manager.id) !== String(id) &&
-                  String(manager.status || "Active").toLowerCase() === "active"
-                )
+                String(manager.department_id ?? manager.departmentId) === String(formData.department) &&
+                String(manager.designation_id ?? manager.designationId) === String(formData.designation) &&
+                String(manager.id) !== String(id) &&
+                String(manager.status || "Active").toLowerCase() === "active"
+              )
                 ? "Select Reporting Manager"
                 : "No Reporting Manager Available"
           }
@@ -1636,9 +1643,9 @@ const AddressManagement = ({ formData, updateField, errors }) => {
           }
           error={errors?.permanentCountry}
         />
-{/* 
+        {/* 
        <Input */}
-          {/* label="Permanent Address"
+        {/* label="Permanent Address"
           value={formData.permanentAddress}
           onChange={(e) =>
             updateField("permanentAddress", e.target.value)

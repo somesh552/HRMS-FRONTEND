@@ -24,4 +24,5 @@ export const employeeApi = {
     apiClient.get(`/documents/${documentId}`, {
       responseType: "blob",
     }),
+    
 };

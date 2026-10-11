@@ -193,6 +193,7 @@ function EmployeeManagement() {
         </div>
 
         {/* Designation */}
+        {/* Designation */}
         <div className={styles["select-box"]}>
           <select
             value={designation}
@@ -200,19 +201,19 @@ function EmployeeManagement() {
               setDesignation(e.target.value);
               setPage(1);
             }}
-            disabled={isLoadingFilters || department === "All Departments"}
+            disabled={isLoadingFilters}
           >
             <option value="All Designations">
-              {isLoadingFilters
-                ? "Loading Designations..."
-                : department === "All Departments"
-                  ? "Select Department First"
-                  : "All Designations"}
+              {isLoadingFilters ? "Loading Designations..." : "All Designations"}
             </option>
 
             {!isLoadingFilters &&
               designations
-                .filter((desig) => String(desig.department_id) === String(department))
+                .filter(
+                  (desig) =>
+                    department === "All Departments" ||
+                    String(desig.department_id) === String(department)
+                )
                 .map((desig) => (
                   <option key={desig.id} value={String(desig.id)}>
                     {desig.designation_name}
@@ -222,6 +223,7 @@ function EmployeeManagement() {
 
           <ChevronDown />
         </div>
+
 
         <button className={styles["export-button"]}>
           <Download />
@@ -236,10 +238,10 @@ function EmployeeManagement() {
           Add Employee
         </button>
       </div>
-           {/* Employee Table */}
+      {/* Employee Table */}
       <div className={styles["employee-cards"]}>
         <h2>Employee List</h2>
-        </div>
+      </div>
 
 
       {/* Filter error */}
