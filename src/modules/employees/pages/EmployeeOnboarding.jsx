@@ -408,27 +408,19 @@ const EmployeeOnboarding = () => {
           ? designationResponse.data
           : designationResponse.data?.data || [];
 
+        // Keep designations linked to their department. Duplicate names in
+        // different departments are valid, so deduplicate by ID only.
         const uniqueDesignations = designationList.filter(
           (designation, index, self) =>
-            index ===
-            self.findIndex(
-              (item) =>
-                String(item.designation_name || "")
-                  .trim()
-                  .toLowerCase() ===
-                String(designation.designation_name || "")
-                  .trim()
-                  .toLowerCase()
-            )
+            index === self.findIndex((item) => String(item.id) === String(designation.id))
         );
 
         setDesignations(uniqueDesignations);
 
-        setManagers(
-          Array.isArray(employeeResponse.data)
-            ? employeeResponse.data
-            : employeeResponse.data?.data || []
-        );
+        const employeeList = Array.isArray(employeeResponse.data)
+          ? employeeResponse.data
+          : employeeResponse.data?.data || employeeResponse.data?.employees || [];
+        setManagers(employeeList);
       } catch (error) {
         console.error("Failed to load departments/designations:", error);
 
@@ -451,10 +443,11 @@ const EmployeeOnboarding = () => {
     setFormData((prev) => ({
       ...prev,
       [field]: value,
-
-      ...(field === "department" || field === "designation"
-        ? { reportingManager: "" }
-        : {}),
+      ...(field === "department"
+        ? { designation: "", reportingManager: "" }
+        : field === "designation"
+          ? { reportingManager: "" }
+          : {}),
     }));
   };
   // ==========================================
@@ -1368,11 +1361,14 @@ const EmployeeRegistration = ({
           label="Designation"
           value={formData.designation}
           onChange={(e) => updateField("designation", e.target.value)}
-          disabled={isLoadingOptions}
-          options={designations.map((designation) => ({
-            value: String(designation.id),
-            label: designation.designation_name,
-          }))}
+          disabled={isLoadingOptions || !formData.department}
+          emptyLabel={!formData.department ? "Select Department First" : "Select Designation"}
+          options={designations
+            .filter((designation) => String(designation.department_id) === String(formData.department))
+            .map((designation) => ({
+              value: String(designation.id),
+              label: designation.designation_name,
+            }))}
           error={errors.designation}
         />
         <Select
@@ -1386,17 +1382,29 @@ const EmployeeRegistration = ({
             !formData.department ||
             !formData.designation
           }
+          emptyLabel={
+            !formData.department || !formData.designation
+              ? "Select Department and Designation First"
+              : (managers || []).some((manager) =>
+                  String(manager.department_id ?? manager.departmentId) === String(formData.department) &&
+                  String(manager.designation_id ?? manager.designationId) === String(formData.designation) &&
+                  String(manager.id) !== String(id) &&
+                  String(manager.status || "Active").toLowerCase() === "active"
+                )
+                ? "Select Reporting Manager"
+                : "No Reporting Manager Available"
+          }
           options={(managers || [])
             .filter(
               (manager) =>
-                String(manager.department_id) === String(formData.department) &&
-                String(manager.designation_id) === String(formData.designation) &&
-                String(manager.id) !== String(id)
+                String(manager.department_id ?? manager.departmentId) === String(formData.department) &&
+                String(manager.designation_id ?? manager.designationId) === String(formData.designation) &&
+                String(manager.id) !== String(id) &&
+                String(manager.status || "Active").toLowerCase() === "active"
             )
             .map((manager) => ({
               value: String(manager.id),
-              label: `${manager.first_name ?? manager.firstName ?? ""} ${manager.last_name ?? manager.lastName ?? ""
-                }`.trim(),
+              label: `${manager.first_name ?? manager.firstName ?? ""} ${manager.last_name ?? manager.lastName ?? ""}`.trim(),
             }))}
           error={errors.reportingManager}
         />
@@ -2009,6 +2017,7 @@ const Select = ({
   options,
   disabled = false,
   error,
+  emptyLabel,
 }) => {
   return (
     <div className={styles["form-group"]}>
@@ -2020,7 +2029,7 @@ const Select = ({
         disabled={disabled}
       >
         <option value="">
-          {disabled ? `Loading ${label}...` : `Select ${label}`}
+          {disabled && !emptyLabel ? `Loading ${label}...` : (emptyLabel || `Select ${label}`)}
         </option>
 
         {options.map((option) => {

@@ -56,7 +56,11 @@ const HolidayList = () => {
 
       const lists = Array.isArray(response)
         ? response
-        : [];
+        : Array.isArray(response?.data)
+          ? response.data
+          : Array.isArray(response?.data?.data)
+            ? response.data.data
+            : [];
 
       setHolidayLists(lists);
 
@@ -100,7 +104,11 @@ const HolidayList = () => {
 
       const holidayData = Array.isArray(response)
         ? response
-        : [];
+        : Array.isArray(response?.data)
+          ? response.data
+          : Array.isArray(response?.data?.data)
+            ? response.data.data
+            : [];
 
       setHolidays(holidayData);
     } catch (error) {
@@ -351,7 +359,7 @@ const HolidayList = () => {
             type="button"
             className={styles.navigationButton}
             onClick={openAdd}
-            disabled={!selectedListId}
+            // disabled={!selectedListId}
             title="Add Holiday"
             aria-label="Add Holiday"
           >

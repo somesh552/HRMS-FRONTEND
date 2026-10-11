@@ -27,7 +27,25 @@ const LeaveManagement = () => {
   const navigate = useNavigate();
 
   const [isApplyOpen, setIsApplyOpen] = useState(false);
+useEffect(() => {
+  if (!isApplyOpen) return;
 
+  const interval = setInterval(async () => {
+    try {
+      const response = await leaveAllocationsApi.getAll();
+
+      const data = Array.isArray(response)
+        ? response
+        : response?.data || [];
+
+      setAllocations(data);
+    } catch (error) {
+      console.error("Failed to refresh leave balance:", error);
+    }
+  }, 15000);
+
+  return () => clearInterval(interval);
+}, [isApplyOpen]);
   const [form, setForm] = useState(initialForm);
   const [employeeSearch, setEmployeeSearch] = useState("");
 

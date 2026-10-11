@@ -130,25 +130,13 @@ function EmployeeManagement() {
       (employee.employee_code || "").toLowerCase().includes(searchTerm) ||
       (employee.email || "").toLowerCase().includes(searchTerm);
 
-    const employeeDepartment = (employee.department_name || "")
-      .trim()
-      .toLowerCase();
-
-    const employeeDesignation = (employee.designation_name || "")
-      .trim()
-      .toLowerCase();
-
-    const selectedDepartment = department.trim().toLowerCase();
-
-    const selectedDesignation = designation.trim().toLowerCase();
-
     const departmentMatch =
       department === "All Departments" ||
-      employeeDepartment === selectedDepartment;
+      String(employee.department_id ?? employee.departmentId ?? "") === String(department);
 
     const designationMatch =
       designation === "All Designations" ||
-      employeeDesignation === selectedDesignation;
+      String(employee.designation_id ?? employee.designationId ?? "") === String(designation);
 
     return searchMatch && departmentMatch && designationMatch;
   });
@@ -184,6 +172,7 @@ function EmployeeManagement() {
             value={department}
             onChange={(e) => {
               setDepartment(e.target.value);
+              setDesignation("All Designations");
               setPage(1);
             }}
             disabled={isLoadingFilters}
@@ -194,7 +183,7 @@ function EmployeeManagement() {
 
             {!isLoadingFilters &&
               departments.map((dept) => (
-                <option key={dept.id} value={dept.department_name}>
+                <option key={dept.id} value={String(dept.id)}>
                   {dept.department_name}
                 </option>
               ))}
@@ -211,20 +200,24 @@ function EmployeeManagement() {
               setDesignation(e.target.value);
               setPage(1);
             }}
-            disabled={isLoadingFilters}
+            disabled={isLoadingFilters || department === "All Departments"}
           >
             <option value="All Designations">
               {isLoadingFilters
                 ? "Loading Designations..."
-                : "All Designations"}
+                : department === "All Departments"
+                  ? "Select Department First"
+                  : "All Designations"}
             </option>
 
             {!isLoadingFilters &&
-              designations.map((desig) => (
-                <option key={desig.id} value={desig.designation_name}>
-                  {desig.designation_name}
-                </option>
-              ))}
+              designations
+                .filter((desig) => String(desig.department_id) === String(department))
+                .map((desig) => (
+                  <option key={desig.id} value={String(desig.id)}>
+                    {desig.designation_name}
+                  </option>
+                ))}
           </select>
 
           <ChevronDown />

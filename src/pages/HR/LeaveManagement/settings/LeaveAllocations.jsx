@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { Settings } from "lucide-react";
+import { Settings,Plus } from "lucide-react";
 import { employeeApi } from "../../../../services/api/employee.api";
 import { leaveTypesApi } from "../../../../services/api/leaveTypes.api";
 import { leavePeriodsApi } from "../../../../services/api/leavePeriods.api";
@@ -509,13 +509,16 @@ const LeaveAllocations = () => {
             </span>
           </Link>
 
-          <button
-            type="button"
-            className={styles.primaryButton}
-            onClick={openAdd}
-          >
-            + Allocate Leave
-          </button>
+         <button
+  type="button"
+  className={styles.navigationButton}
+  onClick={openAdd}
+  title="Add Allocation"
+  aria-label="Add Allocation"
+>
+  <Plus size={18} strokeWidth={2} />
+  <span>Add Allocation</span>
+</button>
 
         </div>
       </div>
