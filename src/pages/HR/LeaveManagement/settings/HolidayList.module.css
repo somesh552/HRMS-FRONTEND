@@ -155,8 +155,8 @@
   overflow: hidden;
   border: 1px solid #eadbc8;
   border-radius: 10px;
-  background: #fff;
-  color: #995f2f;
+  background: #f2b353;
+  color: #121212;
   text-decoration: none;
   font-family: inherit;
   font-size: 13px;
@@ -189,9 +189,9 @@
 .navigationButton:hover:not(:disabled) {
   width: 145px;
   gap: 8px;
-  border-color: #f2b353;
-  background: #f2b353;
-  color: #241a10;
+  border-color: #121212;
+  background: #121212;
+  color: #f2b353;
   box-shadow: 0 4px 12px rgba(153, 95, 47, 0.12);
 }
 
@@ -202,7 +202,7 @@
 }
 
 .navigationButton:focus-visible {
-  outline: 2px solid #995f2f;
+  outline: 2px solid #f2b353;
   outline-offset: 3px;
 }
 

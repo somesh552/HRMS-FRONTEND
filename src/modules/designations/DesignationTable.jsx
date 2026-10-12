@@ -122,7 +122,7 @@ const DesignationTable = () => {
 
         <div className={styles["designation-toolbar-right"]}>
 
-          <div className={styles["status-select"]}>
+          {/* <div className={styles["status-select"]}>
             <select
               value={status}
               onChange={(e) => setStatus(e.target.value)}
@@ -133,14 +133,14 @@ const DesignationTable = () => {
             </select>
 
             <ChevronDown size={17} />
-          </div>
+          </div> */}
 
-          <button
+          {/* <button
             className={styles["filter-btn"]}
             title="Filter"
           >
             <SlidersHorizontal size={18} />
-          </button>
+          </button> */}
 
           <button
             className={styles["export-btn"]}

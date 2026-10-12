@@ -406,8 +406,8 @@
   border: 1px solid #E4D6A9;
   border-radius: 8px;
 
-  background: #995f2f;
-  color: #f2b353;
+  background: #f2b353;
+  color: #121212;
 
   text-decoration: none;
   font-family: inherit;
@@ -444,9 +444,9 @@
   width: 160px;
   gap: 7px;
 
-  background: #f2b353;
-  border-color: #f2b353;
-  color: #995F2F;
+  background: #121212;
+  border-color: #121212;
+  color: #f2b353;
 }
 
 /* Show text on hover */
@@ -457,7 +457,7 @@
 
 /* Keyboard accessibility */
 .navigationButton:focus-visible {
-  outline: 2px solid #f2b353;
+  outline: 2px solid #121212;
   outline-offset: 3px;
 }
 

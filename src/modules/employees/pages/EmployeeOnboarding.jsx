@@ -469,9 +469,11 @@ const EmployeeOnboarding = () => {
 
       designationId: formData.designation ? Number(formData.designation) : null,
 
-      managerId: formData.reportingManager
-        ? Number(formData.reportingManager)
-        : null,
+      managerId:
+        formData.reportingManager &&
+          formData.reportingManager !== "unassigned"
+          ? Number(formData.reportingManager)
+          : null,
 
       employmentType: formData.employmentType,
       workLocation: formData.workLocation,
@@ -676,7 +678,10 @@ const EmployeeOnboarding = () => {
     } catch (error) {
       console.error("Employee submission failed:", error);
       console.error("HTTP status:", error.response?.status);
-      console.error("Backend error:", error.response?.data);
+      console.error(
+        "Backend error:",
+        JSON.stringify(error.response?.data ?? error.message, null, 2)
+      );
 
       const backendMessage = error.response?.data?.message;
 
@@ -789,10 +794,10 @@ const EmployeeOnboarding = () => {
         newErrors.designation = "Designation is required";
       }
 
-      if (!formData.reportingManager?.trim()) {
-        newErrors.reportingManager =
-          "Reporting Manager is required";
-      }
+      // if (!formData.reportingManager?.trim()) {
+      //   newErrors.reportingManager =
+      //     "Reporting Manager is required";
+      // }
 
       if (!formData.employmentType) {
         newErrors.employmentType =
@@ -1392,30 +1397,36 @@ const EmployeeRegistration = ({
           emptyLabel={
             !formData.department || !formData.designation
               ? "Select Department and Designation First"
-              : (managers || []).some((manager) =>
-                String(manager.department_id ?? manager.departmentId) === String(formData.department) &&
-                String(manager.designation_id ?? manager.designationId) === String(formData.designation) &&
-                String(manager.id) !== String(id) &&
-                String(manager.status || "Active").toLowerCase() === "active"
-              )
-                ? "Select Reporting Manager"
-                : "No Reporting Manager Available"
+              : "Select Reporting Manager"
           }
-          options={(managers || [])
-            .filter(
+          options={(() => {
+            const availableManagers = (managers || []).filter(
               (manager) =>
-                String(manager.department_id ?? manager.departmentId) === String(formData.department) &&
-                String(manager.designation_id ?? manager.designationId) === String(formData.designation) &&
+                String(manager.department_id ?? manager.departmentId) ===
+                String(formData.department) &&
+                String(manager.designation_id ?? manager.designationId) ===
+                String(formData.designation) &&
                 String(manager.id) !== String(id) &&
                 String(manager.status || "Active").toLowerCase() === "active"
-            )
-            .map((manager) => ({
+            );
+
+            if (availableManagers.length === 0) {
+              return [
+                {
+                  value: "",
+                  label: "Unassigned Manager",
+                },
+              ];
+            }
+
+            return availableManagers.map((manager) => ({
               value: String(manager.id),
-              label: `${manager.first_name ?? manager.firstName ?? ""} ${manager.last_name ?? manager.lastName ?? ""}`.trim(),
-            }))}
+              label: `${manager.first_name ?? manager.firstName ?? ""} ${manager.last_name ?? manager.lastName ?? ""
+                }`.trim(),
+            }));
+          })()}
           error={errors.reportingManager}
         />
-
         <Select
           label="Employment Type"
           value={formData.employmentType}
