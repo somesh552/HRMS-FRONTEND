@@ -27,25 +27,25 @@ const LeaveManagement = () => {
   const navigate = useNavigate();
 
   const [isApplyOpen, setIsApplyOpen] = useState(false);
-useEffect(() => {
-  if (!isApplyOpen) return;
+  useEffect(() => {
+    if (!isApplyOpen) return;
 
-  const interval = setInterval(async () => {
-    try {
-      const response = await leaveAllocationsApi.getAll();
+    const interval = setInterval(async () => {
+      try {
+        const response = await leaveAllocationsApi.getAll();
 
-      const data = Array.isArray(response)
-        ? response
-        : response?.data || [];
+        const data = Array.isArray(response)
+          ? response
+          : response?.data || [];
 
-      setAllocations(data);
-    } catch (error) {
-      console.error("Failed to refresh leave balance:", error);
-    }
-  }, 15000);
+        setAllocations(data);
+      } catch (error) {
+        console.error("Failed to refresh leave balance:", error);
+      }
+    }, 15000);
 
-  return () => clearInterval(interval);
-}, [isApplyOpen]);
+    return () => clearInterval(interval);
+  }, [isApplyOpen]);
   const [form, setForm] = useState(initialForm);
   const [employeeSearch, setEmployeeSearch] = useState("");
 
@@ -310,13 +310,19 @@ useEffect(() => {
 
   // Find the employee's shared leave allocation
   const selectedAllocation =
-    allocations.find(
-      (allocation) =>
-        Number(allocation.employee_id) ===
-        Number(form.employeeId) &&
-        allocation.remaining_leaves !== null &&
-        allocation.remaining_leaves !== undefined
-    ) || null;
+    allocations
+      .filter(
+        (allocation) =>
+          Number(allocation.employee_id) ===
+          Number(form.employeeId) &&
+          allocation.remaining_leaves !== null &&
+          allocation.remaining_leaves !== undefined
+      )
+      .sort(
+        (a, b) =>
+          Number(b.leave_period_id || 0) -
+          Number(a.leave_period_id || 0)
+      )[0] || null;
   /*
    * ==========================================
    * CURRENT BALANCE
@@ -401,9 +407,13 @@ useEffect(() => {
     try {
       const response = await leaveAllocationsApi.getAll();
 
+      console.log("Latest leave allocations:", response);
+
       const allocationData = Array.isArray(response)
         ? response
         : response?.data || [];
+
+      console.log("Allocation data:", allocationData);
 
       setAllocations(allocationData);
     } catch (error) {
